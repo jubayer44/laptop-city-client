@@ -73,7 +73,7 @@ const Navbar = () => {
                 <Link to="/">Home</Link>
               </li>
               <li className="text-gray-600 hover:text-blue-600">
-                <Link to="/book">Book</Link>
+                <Link to="/blog">Blog</Link>
               </li>
 
               {user ? (

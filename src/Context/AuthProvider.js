@@ -11,24 +11,29 @@ const AuthProvider = ({children}) => {
     const googleProvider = new GoogleAuthProvider();
 
     const signUp = (email, password) => {
+        setLoading(false);
         return createUserWithEmailAndPassword(auth, email, password);
     };
 
     const updateUser = (name) => {
+        setLoading(false);
         return updateProfile(auth.currentUser, {
             displayName: name
         })
     };
 
     const logIn = (email, password) => {
+        setLoading(false);
         return signInWithEmailAndPassword(auth, email, password);
     };
 
     const googleLogIn = () => {
+        setLoading(false);
         return signInWithPopup(auth, googleProvider);
     };
 
     const logOut = () => {
+        setLoading(false);
         return signOut(auth);
     };
 

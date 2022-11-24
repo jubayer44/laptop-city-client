@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import BookingModal from "../../BookingModal/BookingModal";
 import Spinner from "../../components/Spinner";
 
 const CategoryDetails = () => {
   const [products, setProducts] = useState([]);
   const [loader, setLoader] = useState(true);
+  const [modalInfo, setModalInfo] = useState(null);
 
   useEffect(() => {
     const id = window.location.pathname.split("/")[2];
@@ -18,7 +20,6 @@ const CategoryDetails = () => {
   if (loader) {
     return <Spinner />;
   }
-
 
   return (
     <div>
@@ -64,14 +65,19 @@ const CategoryDetails = () => {
                   Posted on: ${product.postedDate} | {product.postedTime}
                 </p>
                 <p className="mb-4 text-gray-700">Seller: Jack</p>
-                <button className="btn btn-primary w-full my-2 bg-blue">
-                  Bye Now
-                </button>
+                <label
+                  onClick={() => setModalInfo(product)}
+                  htmlFor="booking-modal"
+                  className="btn btn-primary w-full my-2 bg-blue"
+                >
+                  Book Now
+                </label>
               </div>
             </div>
           ))}
         </div>
       </div>
+      <BookingModal product={modalInfo} />
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import addUser from "../../addUser/addUser";
 import { AuthContext } from "../../Context/AuthProvider";
@@ -27,10 +28,14 @@ const SignUp = () => {
               addUser(user, setLoading, setUsr, data, );
             }
           })
-          .catch((err) => console.log(err.message));
+          .catch((err) => {
+            console.log(err.message)
+            toast.error(err.message);
+          });
       })
       .catch((err) => {
         console.log(err.message);
+        toast.error(err.message);
         setLoading(false);
       });
   };
@@ -41,7 +46,10 @@ const SignUp = () => {
         const user = res.user;
         addUser(user, setLoading, setUsr);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err)
+        toast.error(err.message);
+      });
   };
 
   return (

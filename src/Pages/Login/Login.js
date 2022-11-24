@@ -34,6 +34,7 @@ const Login = () => {
       })
       .catch((err) => {
         console.log(err.message);
+        toast.error(err.message);
         setLoading(false);
       });
   };
@@ -45,7 +46,10 @@ const Login = () => {
         console.log(user);
         addUser(user, setLoading, setUsr);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.message);
+      });
   };
 
   return (
