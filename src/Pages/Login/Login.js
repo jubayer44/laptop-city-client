@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 // import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { AuthContext } from "../../Context/AuthProvider";
 // import { AuthContext } from "../Context/AuthProvider";
 // import useToken from "../hooks/useToken";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
 //   const [usr, setUsr] = useState("");
-//   const { logIn, googleSignIn } = useContext(AuthContext);
+  const { logIn, googleLogIn } = useContext(AuthContext);
   const { register, handleSubmit } = useForm();
 //   const location = useLocation();
 //   const navigate = useNavigate();
@@ -21,42 +22,44 @@ const Login = () => {
   const handleLogin = (data) => {
     console.log(data);
 //     setLoading(true);
-//     logIn(data?.email, data?.password)
-//       .then((result) => {
-//         const user = result.user;
-//         if (user) {
-//           setUsr(user.email);
-//           setLoading(false);
-//         } else {
-//           setLoading(false);
-//         }
-//       })
-//       .catch((err) => {
-//         console.log(err.message);
-//         setLoading(false);
-//       });
+    logIn(data?.email, data?.password)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        if (user) {
+          // setUsr(user.email);
+          setLoading(false);
+        } else {
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err.message);
+        setLoading(false);
+      });
   };
 
-//   const handleGoogleLogin = () => {
-//     googleSignIn()
-//     .then(res => {
-//       const user = res.user;
-//       fetch(`http://localhost:5000/users`, {
-//         method: 'PUT',
-//         headers: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify({
-//           name: user?.displayName,
-//           email: user?.email
-//         })
-//       })
-//       .then(res => res.json())
-//       .then(data => {
-//         console.log(data);
-//         setUsr(user.email);
-//       })
-//     })
-//     .catch(err => console.log(err));
-//   }
+  const handleGoogleLogin = () => {
+    googleLogIn()
+    .then(res => {
+      const user = res.user;
+      console.log(user);
+      // fetch(`http://localhost:5000/users`, {
+      //   method: 'PUT',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({
+      //     name: user?.displayName,
+      //     email: user?.email
+      //   })
+      // })
+      // .then(res => res.json())
+      // .then(data => {
+      //   console.log(data);
+      //   setUsr(user.email);
+      // })
+    })
+    .catch(err => console.log(err));
+  }
 
   return (
     <div className="w-full max-w-md p-8 space-y-3 rounded-xl my-10 mx-auto">
@@ -116,7 +119,7 @@ const Login = () => {
       </div>
       <div className="flex justify-center space-x-4">
         <button
-        // onClick={handleGoogleLogin}
+        onClick={handleGoogleLogin}
         aria-label="Log in with Google" className="p-3 rounded-sm">
           <svg
             xmlns="http://www.w3.org/2000/svg"

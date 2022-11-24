@@ -9,7 +9,7 @@ import { AuthContext } from "../../Context/AuthProvider";
 const SignUp = () => {
   const [loading, setLoading] = useState(false);
   //   const [usr, setUsr] = useState("");
-    const {signUp} = useContext(AuthContext);
+    const {signUp, updateUser, googleLogIn} = useContext(AuthContext);
   const { register, handleSubmit } = useForm();
   //   const location = useLocation();
   //   const navigate = useNavigate();
@@ -23,8 +23,12 @@ const SignUp = () => {
         setLoading(true);
         signUp(data?.email, data?.password)
           .then((result) => {
-            const user = result.user;
-            console.log(user);
+            // const user = result.user;
+            updateUser(data?.name)
+            .then(result => {
+              console.log(result);
+            })
+            .catch(err => console.log(err.message));
             // if (user) {
             //   setUsr(user.email);
             //   setLoading(false);
@@ -38,10 +42,11 @@ const SignUp = () => {
           });
   };
 
-  //   const handleGoogleLogin = () => {
-  //     googleSignIn()
-  //     .then(res => {
-  //       const user = res.user;
+    const handleGoogleLogin = () => {
+      googleLogIn()
+      .then(res => {
+        const user = res.user;
+        console.log(user);
   //       fetch(`http://localhost:5000/users`, {
   //         method: 'PUT',
   //         headers: { 'Content-Type': 'application/json' },
@@ -55,9 +60,9 @@ const SignUp = () => {
   //         console.log(data);
   //         setUsr(user.email);
   //       })
-  //     })
-  //     .catch(err => console.log(err));
-  // }
+      })
+      .catch(err => console.log(err));
+  }
 
   return (
     <div className="w-full max-w-md p-8 space-y-3 rounded-xl my-10 mx-auto">
@@ -135,7 +140,7 @@ const SignUp = () => {
       </div>
       <div className="flex justify-center space-x-4">
         <button
-          // onClick={handleGoogleLogin}
+          onClick={handleGoogleLogin}
           aria-label="Log in with Google"
           className="p-3 rounded-sm"
         >
