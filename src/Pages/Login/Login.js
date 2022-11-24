@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
-// import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../Context/AuthProvider";
 // import { AuthContext } from "../Context/AuthProvider";
@@ -11,22 +10,23 @@ const Login = () => {
 //   const [usr, setUsr] = useState("");
   const { logIn, googleLogIn } = useContext(AuthContext);
   const { register, handleSubmit } = useForm();
-//   const location = useLocation();
-//   const navigate = useNavigate();
-//   const from = location.state?.from?.pathname || "/";
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from?.pathname || "/";
 //   const [token] = useToken(usr);
 //   if (token) {
-//     navigate(from, { replace: true });
+    // navigate(from, { replace: true });
 //   }
 
   const handleLogin = (data) => {
     console.log(data);
-//     setLoading(true);
+    setLoading(true);
     logIn(data?.email, data?.password)
       .then((result) => {
         const user = result.user;
         console.log(user);
         if (user) {
+          navigate(from, { replace: true });
           // setUsr(user.email);
           setLoading(false);
         } else {
