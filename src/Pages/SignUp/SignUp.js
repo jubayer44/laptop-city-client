@@ -1,99 +1,119 @@
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 // import { Link, useLocation, useNavigate } from "react-router-dom";
-// import { useForm } from "react-hook-form";
 // import { AuthContext } from "../Context/AuthProvider";
 // import useToken from "../hooks/useToken";
 
 const SignUp = () => {
   const [loading, setLoading] = useState(false);
-//   const [usr, setUsr] = useState("");
-//   const { logIn, googleSignIn } = useContext(AuthContext);
-//   const { register, handleSubmit } = useForm();
-//   const location = useLocation();
-//   const navigate = useNavigate();
-//   const from = location.state?.from?.pathname || "/";
-//   const [token] = useToken(usr);
-//   if (token) {
-//     navigate(from, { replace: true });
-//   }
+  //   const [usr, setUsr] = useState("");
+  //   const { logIn, googleSignIn } = useContext(AuthContext);
+  const { register, handleSubmit } = useForm();
+  //   const location = useLocation();
+  //   const navigate = useNavigate();
+  //   const from = location.state?.from?.pathname || "/";
+  //   const [token] = useToken(usr);
+  //   if (token) {
+  //     navigate(from, { replace: true });
+  //   }
 
-//   const handleLogin = (data) => {
-//     setLoading(true);
-//     logIn(data?.email, data?.password)
-//       .then((result) => {
-//         const user = result.user;
-//         if (user) {
-//           setUsr(user.email);
-//           setLoading(false);
-//         } else {
-//           setLoading(false);
-//         }
-//       })
-//       .catch((err) => {
-//         console.log(err.message);
-//         setLoading(false);
-//       });
-//   };
+  const handleLogin = (data) => {
+    console.log(data);
+    //     setLoading(true);
+    //     logIn(data?.email, data?.password)
+    //       .then((result) => {
+    //         const user = result.user;
+    //         if (user) {
+    //           setUsr(user.email);
+    //           setLoading(false);
+    //         } else {
+    //           setLoading(false);
+    //         }
+    //       })
+    //       .catch((err) => {
+    //         console.log(err.message);
+    //         setLoading(false);
+    //       });
+  };
 
-//   const handleGoogleLogin = () => {
-//     googleSignIn()
-//     .then(res => {
-//       const user = res.user;
-//       fetch(`http://localhost:5000/users`, {
-//         method: 'PUT',
-//         headers: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify({
-//           name: user?.displayName,
-//           email: user?.email
-//         })
-//       })
-//       .then(res => res.json())
-//       .then(data => {
-//         console.log(data);
-//         setUsr(user.email);
-//       })
-//     })
-//     .catch(err => console.log(err));
-//   }
+  //   const handleGoogleLogin = () => {
+  //     googleSignIn()
+  //     .then(res => {
+  //       const user = res.user;
+  //       fetch(`http://localhost:5000/users`, {
+  //         method: 'PUT',
+  //         headers: { 'Content-Type': 'application/json' },
+  //         body: JSON.stringify({
+  //           name: user?.displayName,
+  //           email: user?.email
+  //         })
+  //       })
+  //       .then(res => res.json())
+  //       .then(data => {
+  //         console.log(data);
+  //         setUsr(user.email);
+  //       })
+  //     })
+  //     .catch(err => console.log(err));
+  // }
 
   return (
     <div className="w-full max-w-md p-8 space-y-3 rounded-xl my-10 mx-auto">
       <h1 className="text-2xl font-bold text-center">Sign Up</h1>
       <form
-        // onSubmit={handleSubmit(handleLogin)}
+        onSubmit={handleSubmit(handleLogin)}
         action=""
         className="space-y-6 ng-untouched ng-pristine ng-valid"
       >
         <div className="space-y-1 text-sm">
-          <label htmlFor="username" className="block dark:text-gray-400">
-            Email
+          <label htmlFor="username" className="block text-gray-700">
+            Name
           </label>
           <input
-            // {...register("email")}
+            {...register("name")}
             type="text"
-            name="email"
-            id="username"
+            placeholder="your name"
             required
-            placeholder="email"
-            className="w-full px-4 py-3 rounded-md dark:border-gray-700  "
+            className="input input-bordered w-full rounded-md"
           />
         </div>
         <div className="space-y-1 text-sm">
-          <label htmlFor="password" className="block dark:text-gray-400">
+          <label htmlFor="username" className="block text-gray-700">
+            Email
+          </label>
+          <input
+            {...register("email")}
+            type="email"
+            placeholder="your email"
+            required
+            className="input input-bordered w-full rounded-md"
+          />
+        </div>
+        <div className="space-y-1 text-sm">
+          <label htmlFor="password" className="block text-gray-700">
             Password
           </label>
           <input
-            // {...register("password")}
+            {...register("password")}
             type="password"
-            name="password"
+            placeholder="your password"
             required
-            id="password"
-            placeholder="Password"
-            className="w-full px-4 py-3 rounded-md   "
+            className="input input-bordered w-full rounded-md"
           />
         </div>
-        <button className="block w-full p-3 text-center rounded-sm dark:text-gray-900 dark:bg-violet-400">
+        <div className="space-y-1 text-sm">
+          <label htmlFor="password" className="block text-gray-700">
+            Account Type
+          </label>
+          <select
+          {...register("category")}
+          required className="select select-bordered w-full rounded-md">
+            <option selected className="text-base">Buyer</option>
+            <option className="text-base">Seller</option>
+          </select>
+        </div>
+        <button className="block w-full btn btn-primary text-center rounded-sm">
           {loading ? (
             <div
               style={{ borderTopColor: "transparent" }}
@@ -106,16 +126,18 @@ const SignUp = () => {
       </form>
 
       <div className="flex items-center pt-4 space-x-1">
-        <div className="flex-1 h-px sm:w-16 dark:bg-gray-700"></div>
-        <p className="px-3 text-sm dark:text-gray-400">
+        <div className="flex-1 h-px sm:w-16 bg-gray-700"></div>
+        <p className="px-3 text-sm text-gray-700">
           Login with social accounts
         </p>
-        <div className="flex-1 h-px sm:w-16 dark:bg-gray-700"></div>
+        <div className="flex-1 h-px sm:w-16 bg-gray-700"></div>
       </div>
       <div className="flex justify-center space-x-4">
         <button
-        // onClick={handleGoogleLogin}
-        aria-label="Log in with Google" className="p-3 rounded-sm">
+          // onClick={handleGoogleLogin}
+          aria-label="Log in with Google"
+          className="p-3 rounded-sm"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 32 32"
@@ -125,7 +147,7 @@ const SignUp = () => {
           </svg>
         </button>
       </div>
-      <p className="text-xs text-center sm:px-6 dark:text-gray-400">
+      <p className="text-xs text-center sm:px-6 text-gray-700">
         Already have an account?
         <Link rel="noopener noreferrer" to="/login" className="underline">
           Login
