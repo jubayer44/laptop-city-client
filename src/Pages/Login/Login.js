@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "../../Context/AuthProvider";
 import toast from "react-hot-toast";
 import useToken from "../../hooks/useToken";
-// import useToken from "../hooks/useToken";
+import addUser from "../../addUser/addUser";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -19,17 +19,14 @@ const Login = () => {
     navigate(from, { replace: true });
   }
 
-  console.log(usr);
-
   const handleLogin = (data) => {
     setLoading(true);
     logIn(data?.email, data?.password)
       .then((result) => {
         const user = result.user;
-        console.log(user);
         if (user) {
-          setUsr(user.email);
-          toast.success('Login successful')
+          setUsr(user?.email);
+          toast.success("Login successful");
           setLoading(false);
         } else {
           setLoading(false);
@@ -43,25 +40,13 @@ const Login = () => {
 
   const handleGoogleLogin = () => {
     googleLogIn()
-    .then(res => {
-      const user = res.user;
-      console.log(user);
-      // fetch(`http://localhost:5000/users`, {
-      //   method: 'PUT',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({
-      //     name: user?.displayName,
-      //     email: user?.email
-      //   })
-      // })
-      // .then(res => res.json())
-      // .then(data => {
-      //   console.log(data);
-      //   setUsr(user.email);
-      // })
-    })
-    .catch(err => console.log(err));
-  }
+      .then((res) => {
+        const user = res.user;
+        console.log(user);
+        addUser(user, setLoading, setUsr);
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div className="w-full max-w-md p-8 space-y-3 rounded-xl my-10 mx-auto">
@@ -114,15 +99,15 @@ const Login = () => {
 
       <div className="flex items-center pt-4 space-x-1">
         <div className="flex-1 h-px sm:w-16 bg-gray-700"></div>
-        <p className="px-3 text-sm text-gray-700">
-          Login with social accounts
-        </p>
+        <p className="px-3 text-sm text-gray-700">Login with social accounts</p>
         <div className="flex-1 h-px sm:w-16 bg-gray-700"></div>
       </div>
       <div className="flex justify-center space-x-4">
         <button
-        onClick={handleGoogleLogin}
-        aria-label="Log in with Google" className="p-3 rounded-sm">
+          onClick={handleGoogleLogin}
+          aria-label="Log in with Google"
+          className="p-3 rounded-sm"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 32 32"

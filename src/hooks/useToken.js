@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 const useToken = (email) => {
     const [token, setToken] = useState("");
     useEffect(() => {
-        console.log(email);
       if (email) {
           fetch(`${process.env.REACT_APP_URL}/jwt?email=${email}`)
           .then(res => res.json())

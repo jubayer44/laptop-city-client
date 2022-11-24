@@ -1,46 +1,30 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import addUser from "../../addUser/addUser";
 import { AuthContext } from "../../Context/AuthProvider";
-// import useToken from "../hooks/useToken";
+import useToken from "../../hooks/useToken";
 
 const SignUp = () => {
   const [loading, setLoading] = useState(false);
-  //   const [usr, setUsr] = useState("");
+  const [usr, setUsr] = useState("");
+  const navigate = useNavigate();
   const { signUp, updateUser, googleLogIn } = useContext(AuthContext);
   const { register, handleSubmit } = useForm();
-  //   const [token] = useToken(usr);
-  //   if (token) {
-  //     navigate(from, { replace: true });
-  //   }
+  const [token] = useToken(usr);
+  if (token) {
+    navigate("/");
+  }
 
-  const handleLogin = (data) => {
+  const handleRegister = (data) => {
     setLoading(true);
     signUp(data?.email, data?.password)
       .then((result) => {
         const user = result.user;
         updateUser(data?.name)
-          .then((result) => {
+          .then(() => {
             if (user) {
-              fetch(`${process.env.REACT_APP_URL}/users`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  name: user?.displayName,
-                  email: user?.email,
-                  status: data?.accountType,
-                }),
-              })
-                .then((res) => res.json())
-                .then((insertData) => {
-                  if(insertData.acknowledged){
-                    console.log(insertData);
-                    setLoading(false);
-                    toast.success('Sign Up Success')
-                  }
-                })
-                .catch(err => console.error(err));
+              addUser(user, setLoading, setUsr, data, );
             }
           })
           .catch((err) => console.log(err.message));
@@ -55,20 +39,7 @@ const SignUp = () => {
     googleLogIn()
       .then((res) => {
         const user = res.user;
-        console.log(user);
-        //       fetch(`http://localhost:5000/users`, {
-        //         method: 'PUT',
-        //         headers: { 'Content-Type': 'application/json' },
-        //         body: JSON.stringify({
-        //           name: user?.displayName,
-        //           email: user?.email
-        //         })
-        //       })
-        //       .then(res => res.json())
-        //       .then(data => {
-        //         console.log(data);
-        //         setUsr(user.email);
-        //       })
+        addUser(user, setLoading, setUsr);
       })
       .catch((err) => console.log(err));
   };
@@ -77,7 +48,7 @@ const SignUp = () => {
     <div className="w-full max-w-md p-8 space-y-3 rounded-xl my-10 mx-auto">
       <h1 className="text-2xl font-bold text-center">Sign Up</h1>
       <form
-        onSubmit={handleSubmit(handleLogin)}
+        onSubmit={handleSubmit(handleRegister)}
         action=""
         className="space-y-6 ng-untouched ng-pristine ng-valid"
       >
