@@ -3,31 +3,32 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../Context/AuthProvider";
 import toast from "react-hot-toast";
+import useToken from "../../hooks/useToken";
 // import useToken from "../hooks/useToken";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
-//   const [usr, setUsr] = useState("");
+  const [usr, setUsr] = useState("");
   const { logIn, googleLogIn } = useContext(AuthContext);
   const { register, handleSubmit } = useForm();
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/";
-//   const [token] = useToken(usr);
-//   if (token) {
-    // navigate(from, { replace: true });
-//   }
+  const [token] = useToken(usr);
+  if (token) {
+    navigate(from, { replace: true });
+  }
+
+  console.log(usr);
 
   const handleLogin = (data) => {
-    console.log(data);
     setLoading(true);
     logIn(data?.email, data?.password)
       .then((result) => {
         const user = result.user;
         console.log(user);
         if (user) {
-          navigate(from, { replace: true });
-          // setUsr(user.email);
+          setUsr(user.email);
           toast.success('Login successful')
           setLoading(false);
         } else {
