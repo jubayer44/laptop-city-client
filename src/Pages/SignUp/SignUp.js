@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../Context/AuthProvider";
 // import { Link, useLocation, useNavigate } from "react-router-dom";
 // import { AuthContext } from "../Context/AuthProvider";
 // import useToken from "../hooks/useToken";
@@ -8,7 +9,7 @@ import { Link } from "react-router-dom";
 const SignUp = () => {
   const [loading, setLoading] = useState(false);
   //   const [usr, setUsr] = useState("");
-  //   const { logIn, googleSignIn } = useContext(AuthContext);
+    const {signUp} = useContext(AuthContext);
   const { register, handleSubmit } = useForm();
   //   const location = useLocation();
   //   const navigate = useNavigate();
@@ -19,22 +20,22 @@ const SignUp = () => {
   //   }
 
   const handleLogin = (data) => {
-    console.log(data);
-    //     setLoading(true);
-    //     logIn(data?.email, data?.password)
-    //       .then((result) => {
-    //         const user = result.user;
-    //         if (user) {
-    //           setUsr(user.email);
-    //           setLoading(false);
-    //         } else {
-    //           setLoading(false);
-    //         }
-    //       })
-    //       .catch((err) => {
-    //         console.log(err.message);
-    //         setLoading(false);
-    //       });
+        setLoading(true);
+        signUp(data?.email, data?.password)
+          .then((result) => {
+            const user = result.user;
+            console.log(user);
+            // if (user) {
+            //   setUsr(user.email);
+            //   setLoading(false);
+            // } else {
+            //   setLoading(false);
+            // }
+          })
+          .catch((err) => {
+            console.log(err.message);
+            setLoading(false);
+          });
   };
 
   //   const handleGoogleLogin = () => {

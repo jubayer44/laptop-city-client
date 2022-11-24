@@ -41,31 +41,27 @@ const [loader, setLoader] = useState(true);
                 aria-label="Article"
                 className="inline-block mb-3 duration-200 hover:text-purple-700"
               >
-                <p className="text-2xl font-bold">
+                <p className="text-xl font-semibold ">
                   {product.productName}
                 </p>
               </div>
               <p className="mb-4 text-gray-700">
-                Location: Dhaka
+                Location: {product.location}
               </p>
               <p className="mb-4 text-gray-700">
-              Resale Price: $120
+              Resale Price: ${product.resalePrice}
               </p>
               <p className="mb-4 text-gray-700">
-              Original Price: $260
+              Original Price: ${product.originalPrice}
               </p>
               <p className="mb-4 text-gray-700">
-              Years of Use: 2 years
+              Years of Use: {product.use}
               </p>
               <p className="mb-4 text-gray-700">
-              Posted on: 12/12/2022 | 11:20 pm
+              Posted on: ${product.postedDate} | {product.postedTime}
               </p>
               <p className="mb-4 text-gray-700">
               Seller: Jack
-              </p>
-              <p className="mb-4 text-gray-700">
-                Sed ut perspiciatis unde omnis iste natus error sit sed quia
-                consequuntur magni voluptatem doloremque.
               </p>
               <button className="btn btn-primary w-full my-2 bg-blue" >Bye Now</button>
             </div>
