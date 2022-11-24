@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../Context/AuthProvider";
-// import { AuthContext } from "../Context/AuthProvider";
+import toast from "react-hot-toast";
 // import useToken from "../hooks/useToken";
 
 const Login = () => {
@@ -28,6 +28,7 @@ const Login = () => {
         if (user) {
           navigate(from, { replace: true });
           // setUsr(user.email);
+          toast.success('Login successful')
           setLoading(false);
         } else {
           setLoading(false);

@@ -1,68 +1,77 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthProvider";
-// import { Link, useLocation, useNavigate } from "react-router-dom";
-// import { AuthContext } from "../Context/AuthProvider";
 // import useToken from "../hooks/useToken";
 
 const SignUp = () => {
   const [loading, setLoading] = useState(false);
   //   const [usr, setUsr] = useState("");
-    const {signUp, updateUser, googleLogIn} = useContext(AuthContext);
+  const { signUp, updateUser, googleLogIn } = useContext(AuthContext);
   const { register, handleSubmit } = useForm();
-  //   const location = useLocation();
-  //   const navigate = useNavigate();
-  //   const from = location.state?.from?.pathname || "/";
   //   const [token] = useToken(usr);
   //   if (token) {
   //     navigate(from, { replace: true });
   //   }
 
   const handleLogin = (data) => {
-        setLoading(true);
-        signUp(data?.email, data?.password)
+    setLoading(true);
+    signUp(data?.email, data?.password)
+      .then((result) => {
+        const user = result.user;
+        updateUser(data?.name)
           .then((result) => {
-            // const user = result.user;
-            updateUser(data?.name)
-            .then(result => {
-              console.log(result);
-            })
-            .catch(err => console.log(err.message));
-            // if (user) {
-            //   setUsr(user.email);
-            //   setLoading(false);
-            // } else {
-            //   setLoading(false);
-            // }
+            if (user) {
+              fetch(`${process.env.REACT_APP_URL}/users`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  name: user?.displayName,
+                  email: user?.email,
+                  status: data?.accountType,
+                }),
+              })
+                .then((res) => res.json())
+                .then((insertData) => {
+                  if(insertData.acknowledged){
+                    console.log(insertData);
+                    setLoading(false);
+                    toast.success('Sign Up Success')
+                  }
+                })
+                .catch(err => console.error(err));
+            }
           })
-          .catch((err) => {
-            console.log(err.message);
-            setLoading(false);
-          });
+          .catch((err) => console.log(err.message));
+      })
+      .catch((err) => {
+        console.log(err.message);
+        setLoading(false);
+      });
   };
 
-    const handleGoogleLogin = () => {
-      googleLogIn()
-      .then(res => {
+  const handleGoogleLogin = () => {
+    googleLogIn()
+      .then((res) => {
         const user = res.user;
         console.log(user);
-  //       fetch(`http://localhost:5000/users`, {
-  //         method: 'PUT',
-  //         headers: { 'Content-Type': 'application/json' },
-  //         body: JSON.stringify({
-  //           name: user?.displayName,
-  //           email: user?.email
-  //         })
-  //       })
-  //       .then(res => res.json())
-  //       .then(data => {
-  //         console.log(data);
-  //         setUsr(user.email);
-  //       })
+        //       fetch(`http://localhost:5000/users`, {
+        //         method: 'PUT',
+        //         headers: { 'Content-Type': 'application/json' },
+        //         body: JSON.stringify({
+        //           name: user?.displayName,
+        //           email: user?.email
+        //         })
+        //       })
+        //       .then(res => res.json())
+        //       .then(data => {
+        //         console.log(data);
+        //         setUsr(user.email);
+        //       })
       })
-      .catch(err => console.log(err));
-  }
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div className="w-full max-w-md p-8 space-y-3 rounded-xl my-10 mx-auto">
@@ -113,9 +122,13 @@ const SignUp = () => {
             Account Type
           </label>
           <select
-          {...register("category")}
-          required className="select select-bordered w-full rounded-md">
-            <option selected className="text-base">Buyer</option>
+            {...register("accountType")}
+            required
+            className="select select-bordered w-full rounded-md"
+          >
+            <option selected className="text-base">
+              Buyer
+            </option>
             <option className="text-base">Seller</option>
           </select>
         </div>
@@ -133,9 +146,7 @@ const SignUp = () => {
 
       <div className="flex items-center pt-4 space-x-1">
         <div className="flex-1 h-px sm:w-16 bg-gray-700"></div>
-        <p className="px-3 text-sm text-gray-700">
-          Login with social accounts
-        </p>
+        <p className="px-3 text-sm text-gray-700">Login with social accounts</p>
         <div className="flex-1 h-px sm:w-16 bg-gray-700"></div>
       </div>
       <div className="flex justify-center space-x-4">
