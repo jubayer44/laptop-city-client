@@ -1,25 +1,41 @@
-import React, { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import React, {  useState } from "react";
 import BookingModal from "../../BookingModal/BookingModal";
 import Spinner from "../../components/Spinner";
 
 const CategoryDetails = () => {
-  const [products, setProducts] = useState([]);
-  const [loader, setLoader] = useState(true);
   const [modalInfo, setModalInfo] = useState(null);
+  const [modal, setModal] = useState(false);
 
-  useEffect(() => {
-    const id = window.location.pathname.split("/")[2];
-    fetch(`${process.env.REACT_APP_URL}/products?id=${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setProducts(data);
-        setLoader(false);
-      });
-  }, []);
+  const id = window.location.pathname.split("/")[2];
+  // useEffect(() => {
+  //   fetch(`${process.env.REACT_APP_URL}/products?id=${id}`)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setProducts(data);
+  //       setLoader(false);
+  //     });
+  // }, []);
 
-  if (loader) {
+
+
+  const {data: products, isLoading, refetch} = useQuery({
+    queryKey: ['products'],
+    queryFn: async()=> {
+      const res = await fetch(`${process.env.REACT_APP_URL}/products?id=${id}`)
+      const data = res.json();
+      return data;
+    }
+  })
+
+  if (isLoading) {
     return <Spinner />;
   }
+
+  const handleBooking =(product) => {
+    setModal(true);
+      setModalInfo(product);
+  };
 
   return (
     <div>
@@ -66,7 +82,7 @@ const CategoryDetails = () => {
                 </p>
                 <p className="mb-4 text-gray-700">Seller: Jack</p>
                 <label
-                  onClick={() => setModalInfo(product)}
+                  onClick={() => handleBooking(product)}
                   htmlFor="booking-modal"
                   className="btn btn-primary w-full my-2 bg-blue"
                 >
@@ -77,7 +93,9 @@ const CategoryDetails = () => {
           ))}
         </div>
       </div>
-      <BookingModal product={modalInfo} />
+      {
+        modal && <BookingModal product={modalInfo} setModal={setModal}/>
+      }
     </div>
   );
 };
