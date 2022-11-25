@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react';
 import {createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile} from 'firebase/auth';
 import app from '../../src/Firebase/Firebase.Config';
+import Spinner from '../../src/components/Spinner';
 
 const auth = getAuth(app);
 export const AuthContext = createContext();
@@ -40,18 +41,22 @@ const AuthProvider = ({children}) => {
 
 
 
-
     useEffect(()=> {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
-            console.log(currentUser);
-            setUser(currentUser);
-            setLoading(false);
+            if(currentUser){
+                setUser(currentUser);
+                setLoading(false);
+            }
         })
         return ()=> {
             unsubscribe();
         }
     }, []);
 
+    
+    if(!user){
+        return <div className='h-[90vh] flex items-center justify-center'><Spinner/></div>
+    }
 
     const authInfo = {user, loading, logIn, googleLogIn, signUp, updateUser, logOut}
     return (

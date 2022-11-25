@@ -9,6 +9,7 @@ import CategoryDetails from "../Pages/CategoryDetails/CategoryDetails";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login/Login";
 import MyOrders from "../Pages/MyOrders/MyOrders";
+import MyProducts from "../Pages/MyProducts/MyProducts";
 import SignUp from "../Pages/SignUp/SignUp";
 import PrivateRoutes from "./PrivateRoutes";
 
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard/addproduct',
                 element: <AddProduct/>
+            },
+            {
+                path: '/dashboard/myproducts',
+                element: <MyProducts/>
             },
             {
                 path: '/dashboard/allsellers',

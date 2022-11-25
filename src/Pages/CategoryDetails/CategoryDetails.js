@@ -65,6 +65,9 @@ const CategoryDetails = () => {
                   Original Price: ${product.originalPrice}
                 </p>
                 <p className="mb-4 text-gray-700">
+                  Condition: {product.Condition}
+                </p>
+                <p className="mb-4 text-gray-700">
                   Years of Use: {product.use}
                 </p>
                 <p className="mb-4 text-gray-700">
