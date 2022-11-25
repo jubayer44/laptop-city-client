@@ -1,8 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 const AddProduct = () => {
   const { register, handleSubmit } = useForm();
+
+  const date = new Date();
+
+  const postedDate =
+    date.getDate() + "/" + date.getMonth() + "/" + date.getYear();
+  const postedTime = date.getHours() + ":" + date.getMinutes();
+
   const { data: categories } = useQuery({
     queryKey: ["categories"],
     queryFn: async () => {
@@ -13,54 +21,64 @@ const AddProduct = () => {
   });
 
   const handleAddProduct = (data) => {
-    const {
-      productName,
-      productPrice,
-      Condition,
-      description,
-      img: image,
-      location,
-      phone,
-      productCategory,
-      use,
-    } = data;
+    const img = data.image[0];
 
-    const img = image[0];
     const formData = new FormData();
     formData.append("image", img);
-    const url =
-      `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_photo_url}`;
+    const url = `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_photo_url}`;
     fetch(url, {
       method: "POST",
       body: formData,
     })
       .then((res) => res.json())
-      .then((data) => {
-        console.log(data.data.url);
-        fetch(`${process.env.REACT_APP_URL}/categories/${data.productCategory}`)
-      .then((res) => res.json())
-      .then((categoryData) => {
-        const productData = {
-          productName,
-          productPrice,
-          Condition,
-          description,
-          img: location,
-          phone,
-          productCategory,
-          use,
-        };
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+      .then((dta) => {
+        if (data?.productCategory) {
+          fetch(`http://localhost:5000/categories/${data.productCategory}`)
+            .then((res) => res.json())
+            .then((resData) => {
+              const productData = {
+                productName: data.productName,
+                resalePrice: data.resalePrice,
+                originalPrice: data.originalPrice,
+                Condition: data.Condition,
+                description: data.description,
+                location: data.location,
+                phone: data.phone,
+                use: data.use,
+                img: dta.data.url,
+                categoryId: resData._id,
+                postedDate,
+                postedTime,
+              };
+              addData(productData)
+            })
+            .catch((err) => console.log(err.message));
+        }
       })
       .catch((err) => {
         console.log(err);
       });
-
-    
   };
+
+
+  const addData = (serviceData) => {
+    fetch(`http://localhost:5000/addProduct`, {
+        method: "POST",
+        headers: {
+            'content-type': "application/json"
+        },
+        body: JSON.stringify(serviceData)
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.acknowledged){
+            toast.success('Product added successfully')
+        }
+    })
+    .catch(err => {
+        toast.err(err.message);
+    })
+  }
 
   return (
     <div className="max-w-screen-xl px-8 py-16 mx-auto rounded-lg  md:px-12 lg:px-16 xl:px-32">
@@ -97,13 +115,26 @@ const AddProduct = () => {
           </div>
           <div>
             <label htmlFor="email" className="text-sm">
-              Product Price
+              Resale Price
             </label>
             <input
-              {...register("productPrice")}
+              {...register("resalePrice")}
               id=""
               required
-              placeholder="product price"
+              placeholder="resale price"
+              type="number"
+              className="w-full p-3 rounded border border-2"
+            />
+          </div>
+          <div>
+            <label htmlFor="email" className="text-sm">
+            Original Price
+            </label>
+            <input
+              {...register("originalPrice")}
+              id=""
+              required
+              placeholder="original Price"
               type="number"
               className="w-full p-3 rounded border border-2"
             />
@@ -144,7 +175,7 @@ const AddProduct = () => {
               Product Image
             </label>
             <input
-              {...register("img")}
+              {...register("image")}
               required
               id=""
               type="file"
@@ -177,7 +208,9 @@ const AddProduct = () => {
               className="w-full p-3 rounded border border-2"
             />
           </div>
-          <div>
+          
+        </div>
+        <div>
             <label htmlFor="email" className="text-sm">
               Year of Purchase
             </label>
@@ -190,7 +223,6 @@ const AddProduct = () => {
               className="w-full p-3 rounded border border-2"
             />
           </div>
-        </div>
         <div>
           <label htmlFor="message" className="text-sm">
             Description
