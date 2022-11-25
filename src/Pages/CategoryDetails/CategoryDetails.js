@@ -9,7 +9,7 @@ const CategoryDetails = () => {
 
   const id = window.location.pathname.split("/")[2];
 
-  const {data: products, isLoading, refetch} = useQuery({
+  const {data: products, isLoading} = useQuery({
     queryKey: ['products'],
     queryFn: async()=> {
       const res = await fetch(`${process.env.REACT_APP_URL}/products?id=${id}`)
@@ -36,7 +36,7 @@ const CategoryDetails = () => {
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3 sm:mx-auto ">
           {products?.map((product) => (
             <div
-              className="overflow-hidden transition-shadow duration-300 bg-white rounded"
+              className="overflow-hidden transition-shadow shadow-lg duration-300 bg-white rounded"
               key={product._id}
             >
               <div aria-label="Article">

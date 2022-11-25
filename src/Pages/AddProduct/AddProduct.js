@@ -1,9 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../Context/AuthProvider";
 
 const AddProduct = () => {
+    const {user} = useContext(AuthContext);
   const { register, handleSubmit } = useForm();
+  const navigate = useNavigate();
 
   const date = new Date();
 
@@ -33,11 +38,12 @@ const AddProduct = () => {
       .then((res) => res.json())
       .then((dta) => {
         if (data?.productCategory) {
-          fetch(`http://localhost:5000/categories/${data.productCategory}`)
+          fetch(`${process.env.REACT_APP_URL}/categories/${data.productCategory}`)
             .then((res) => res.json())
             .then((resData) => {
               const productData = {
                 productName: data.productName,
+                sellerEmail: user?.email,
                 resalePrice: data.resalePrice,
                 originalPrice: data.originalPrice,
                 Condition: data.Condition,
@@ -50,7 +56,22 @@ const AddProduct = () => {
                 postedDate,
                 postedTime,
               };
-              addData(productData)
+              fetch(`${process.env.REACT_APP_URL}/addProduct`, {
+                method: "POST",
+                headers: {
+                  "content-type": "application/json",
+                },
+                body: JSON.stringify(productData),
+              })
+                .then((res) => res.json())
+                .then((d) => {
+                  toast.success("product successfully added");
+                  navigate('/dashboard/myproducts')
+                })
+                .catch((err) => {
+                  console.log(err);
+                  toast.error("something went wrong");
+                });
             })
             .catch((err) => console.log(err.message));
         }
@@ -59,26 +80,6 @@ const AddProduct = () => {
         console.log(err);
       });
   };
-
-
-  const addData = (serviceData) => {
-    fetch(`http://localhost:5000/addProduct`, {
-        method: "POST",
-        headers: {
-            'content-type': "application/json"
-        },
-        body: JSON.stringify(serviceData)
-    })
-    .then(res => res.json())
-    .then(data => {
-        if(data.acknowledged){
-            toast.success('Product added successfully')
-        }
-    })
-    .catch(err => {
-        toast.err(err.message);
-    })
-  }
 
   return (
     <div className="max-w-screen-xl px-8 py-16 mx-auto rounded-lg  md:px-12 lg:px-16 xl:px-32">
@@ -128,7 +129,7 @@ const AddProduct = () => {
           </div>
           <div>
             <label htmlFor="email" className="text-sm">
-            Original Price
+              Original Price
             </label>
             <input
               {...register("originalPrice")}
@@ -208,21 +209,20 @@ const AddProduct = () => {
               className="w-full p-3 rounded border border-2"
             />
           </div>
-          
         </div>
         <div>
-            <label htmlFor="email" className="text-sm">
-              Year of Purchase
-            </label>
-            <input
-              {...register("use")}
-              required
-              placeholder="year or purchase"
-              id=""
-              type="text"
-              className="w-full p-3 rounded border border-2"
-            />
-          </div>
+          <label htmlFor="email" className="text-sm">
+            Year of Purchase
+          </label>
+          <input
+            {...register("use")}
+            required
+            placeholder="year or purchase"
+            id=""
+            type="text"
+            className="w-full p-3 rounded border border-2"
+          />
+        </div>
         <div>
           <label htmlFor="message" className="text-sm">
             Description
