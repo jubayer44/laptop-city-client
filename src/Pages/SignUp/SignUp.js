@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
-import addUser from "../../addUser/addUser";
+import addUser from "../addUser/addUser";
 import { AuthContext } from "../../Context/AuthProvider";
 import useToken from "../../hooks/useToken";
 
@@ -15,6 +15,7 @@ const SignUp = () => {
   const [token] = useToken(usr);
   if (token) {
     navigate("/");
+    setLoading(false)
   }
 
   const handleRegister = (data) => {

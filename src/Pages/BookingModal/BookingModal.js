@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { AuthContext } from "../Context/AuthProvider";
+import { AuthContext } from "../../Context/AuthProvider";
+import toast from "react-hot-toast";
 
 const BookingModal = ({ product, setModal }) => {
     const { register, handleSubmit } = useForm();
@@ -12,12 +13,13 @@ const BookingModal = ({ product, setModal }) => {
       const bookingData = {
       productName: product.productName,
       productPrice: product.resalePrice,
+      bookingId: product._id,
       userName: user?.displayName,
       userEmail: user?.email,
       userPhone: data.phone,
       userLocation: data.location
       }
-      fetch(`${process.env.REACT_APP_URL}/bookings`, {
+      fetch(`${process.env.REACT_APP_URL}/bookings?email=${user?.email}`, {
         method: "POST",
         headers: {
           'content-type': 'application/json'
@@ -26,7 +28,12 @@ const BookingModal = ({ product, setModal }) => {
       })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
+        if(data.acknowledged){
+          toast.success('Booked successfully')
+        }
+        else {
+          toast.error(data?.message)
+        }
       })
       .catch(err => console.log(err.message));
     }

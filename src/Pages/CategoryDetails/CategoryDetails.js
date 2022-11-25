@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import React, {  useState } from "react";
-import BookingModal from "../../BookingModal/BookingModal";
+import BookingModal from "../BookingModal/BookingModal";
 import Spinner from "../../components/Spinner";
 
 const CategoryDetails = () => {
@@ -8,16 +8,6 @@ const CategoryDetails = () => {
   const [modal, setModal] = useState(false);
 
   const id = window.location.pathname.split("/")[2];
-  // useEffect(() => {
-  //   fetch(`${process.env.REACT_APP_URL}/products?id=${id}`)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setProducts(data);
-  //       setLoader(false);
-  //     });
-  // }, []);
-
-
 
   const {data: products, isLoading, refetch} = useQuery({
     queryKey: ['products'],

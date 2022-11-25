@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "../../Context/AuthProvider";
 import toast from "react-hot-toast";
 import useToken from "../../hooks/useToken";
-import addUser from "../../addUser/addUser";
+import addUser from "../addUser/addUser";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);

@@ -15,7 +15,6 @@ const addUser = (user, setLoading, setUsr, data) => {
       .then((insertData) => {
         setUsr(user?.email);
         toast.success("Sign Up Success");
-        setLoading(false);
       })
       .catch((err) => console.error(err));
   }
