@@ -1,13 +1,27 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, Outlet } from "react-router-dom";
 import Footer from "../Pages/Shared/Footer/Footer";
 import Navbar from "../Pages/Shared/Navbar/Navbar";
+// import axios from "axios";
+import { AuthContext } from "../Context/AuthProvider";
+import { useQuery } from "@tanstack/react-query";
 
 const DashboardLayouts = () => {
+  const {user} = useContext(AuthContext);
+
+  const {data: currentUser} = useQuery({
+      queryKey: ['user'],
+      queryFn: async() => {
+        const res = await fetch(`${process.env.REACT_APP_URL}/user?email=${user?.email}`)
+        const data = res.json();
+        return data;
+      }
+  })
+
   return (
     <div>
       <Navbar />
-      <label htmlFor="dashboard-drawer" className="p-2 text-gray-700 rounded-md outline-none focus:border-gray-400 focus:border md:hidden">
+      <label htmlFor="dashboard-drawer" className="p-2 text-gray-700 rounded-md outline-none focus:border-gray-400 focus:border lg:hidden">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="w-6 h-6"
@@ -29,25 +43,31 @@ const DashboardLayouts = () => {
           type="checkbox"
           className="drawer-toggle"
         />
-        <div className="drawer-content flex flex-col items-center justify-center">
+        <div className="drawer-content justify-center">
           <Outlet />
         </div>
         <div className="drawer-side">
           <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
-          <ul className="menu p-4 w-80 bg-base-100 text-base-content">
-            <li>
-              <Link to='/dashboard/myorders'>My Orders</Link>
-            </li>
-            <li>
-              <Link to='/dashboard/addproduct'>Add a Product</Link>
-            </li>
-            <li>
-              <Link to='/dashboard/allsellers'> All Sellers</Link>
-            </li>
-            <li>
-              <Link to='/dashboard/allbuyers'>All Buyers</Link>
-            </li>
-          </ul>
+          <div className="menu p-4 w-80 bg-gray-200 text-base-content">
+            
+              {
+                currentUser?.role === "Buyer" && <Link className="p-3 bg-blue-200 rounded-md mb-2 font-semibold" to='/dashboard/myorders'>My Orders</Link>
+              }
+            
+            
+              {
+                currentUser?.role === "Seller" && <Link className="p-3 bg-blue-200 rounded-md mb-2 font-semibold" to='/dashboard/addproduct'>Add a Product</Link>
+              }
+            
+            
+              {
+                currentUser?.role === "Admin" && <> <Link className="p-3 bg-blue-200 rounded-md mb-2 font-semibold" to='/dashboard/allsellers'> All Sellers</Link> 
+                <Link className="p-3 bg-blue-200 rounded-md mb-2 font-semibold" to='/dashboard/allbuyers'>All Buyers</Link>
+                </>
+                
+              }
+            
+          </div>
         </div>
       </div>
       <Footer />

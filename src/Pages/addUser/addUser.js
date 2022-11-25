@@ -8,7 +8,7 @@ const addUser = (user, setLoading, setUsr, data) => {
       body: JSON.stringify({
         name: user?.displayName,
         email: user?.email,
-        status: data ? data.accountType : "Buyer",
+        role: data ? data.accountType : "Buyer",
       }),
     })
       .then((res) => res.json())

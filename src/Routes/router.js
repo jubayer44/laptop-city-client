@@ -6,7 +6,6 @@ import AllBuyers from "../Pages/AllBuyers/AllBuyers";
 import AllSellers from "../Pages/AllSellers/AllSellers";
 import Blog from "../Pages/Blog/Blog";
 import CategoryDetails from "../Pages/CategoryDetails/CategoryDetails";
-import Dashboard from "../Pages/Dashboard/Dashboard";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login/Login";
 import MyOrders from "../Pages/MyOrders/MyOrders";
