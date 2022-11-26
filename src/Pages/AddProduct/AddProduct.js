@@ -90,7 +90,7 @@ const AddProduct = () => {
   }
 
   return (
-    <div className="max-w-screen-xl px-8 py-16 mx-auto rounded-lg  md:px-12 lg:px-16 xl:px-32">
+    <div className="max-w-screen-xl px-4 mx-auto rounded-lg  md:px-4 lg:px-16 xl:px-32">
       <div className="flex flex-col justify-between">
         <div className="space-y-2">
           <h2 className="text-2xl font-bold leading-tight lg:text-2xl text-center">
@@ -98,7 +98,7 @@ const AddProduct = () => {
           </h2>
         </div>
         <img
-          src="https://freepngimg.com/thumb/technology/33410-1-asus-laptop-picture.png"
+          src="https://s.yimg.com/uu/api/res/1.2/IZmwdyWGvg0Nh2rfw9wSbA--~B/aD0xMjAwO3c9MjAwMDthcHBpZD15dGFjaHlvbg--/https://media-mbst-pub-ue1.s3.amazonaws.com/creatr-uploaded-images/2022-07/4a425a40-fd56-11ec-beee-be16b8848f18.cf.jpg"
           alt=""
           className="md:h-[400px] w-full"
         />

@@ -1,10 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "../../Context/AuthProvider";
+import { Link, useNavigate } from "react-router-dom";
+import Spinner from "../../components/Spinner";
 
 const MyOrders = () => {
   const [bookingsData, setBookingsData] = useState([]);
   const { user } = useContext(AuthContext);
+  const navigation = useNavigate();
+  const [loader, setLoader] = useState(false);
 
   useEffect(() => {
     axios
@@ -16,19 +20,28 @@ const MyOrders = () => {
       .then((data) => {
         setBookingsData(data?.data);
       });
-  }, [user?.email]);
+  }, [user?.email, loader]);
 
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_URL}/myorders?email=${user?.email}`, {
-      headers: {
-        authorization: `Bearer ${localStorage.getItem("access_token")}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setBookingsData(data);
+  const handleOrderCancel = (id) => {
+    setLoader(true);
+    const confirm = window.confirm(
+      "Are you sure you want to cancel this order"
+    );
+    if (confirm) {
+      axios(`http://localhost:5000/myOrders/${id}`, {
+        method: "DELETE",
+      }).then((data) => {
+        if (data.data.acknowledged) {
+          setLoader(false);
+          console.log(data);
+        }
       });
-  }, [user?.email]);
+    }
+  };
+
+  if (navigation.state === "loading") {
+    return <Spinner />;
+  }
 
   return (
     <div className="overflow-x-auto w-full">
@@ -64,12 +77,18 @@ const MyOrders = () => {
                   <div className="font-bold">{booking?.productName}</div>
                 </div>
               </td>
-              <td>{booking?.productPrice}</td>
+              <td>${booking?.productPrice}</td>
               <td>
-                <button className="btn btn-primary btn-sm rounded md bg-green-500 px-6">
+                <Link
+                  to={`/dashboard/payment/${booking?._id}`}
+                  className="btn btn-primary btn-sm rounded md bg-green-500 px-6"
+                >
                   Pay
-                </button>
-                <button className="btn btn-primary btn-sm rounded md bg-red-500 ml-2 border-none">
+                </Link>
+                <button
+                  onClick={() => handleOrderCancel(booking?._id)}
+                  className="btn btn-primary btn-sm rounded md bg-red-500 ml-2 border-none"
+                >
                   Cancel
                 </button>
               </td>

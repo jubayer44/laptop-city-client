@@ -58,7 +58,7 @@ const DashboardLayouts = () => {
             
             
               {
-                currentUser?.role === "Seller" && <><Link className="p-3 bg-blue-200 rounded-md mb-2 font-semibold" to='/dashboard'>Add a Product</Link>
+                currentUser?.role === "Seller" && <><Link className="p-3 bg-blue-200 rounded-md mb-2 font-semibold" to='/dashboard/addProduct'>Add a Product</Link>
                <Link className="p-3 bg-blue-200 rounded-md mb-2 font-semibold" to='/dashboard/myproducts'>My Products</Link></>
               }
             

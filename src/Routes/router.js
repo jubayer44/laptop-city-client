@@ -11,6 +11,7 @@ import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login/Login";
 import MyOrders from "../Pages/MyOrders/MyOrders";
 import MyProducts from "../Pages/MyProducts/MyProducts";
+import Payment from "../Pages/Payment/Payment";
 import SignUp from "../Pages/SignUp/SignUp";
 import WishList from "../Pages/WishLish/WishList";
 import PrivateRoutes from "./PrivateRoutes";
@@ -52,11 +53,16 @@ const router = createBrowserRouter([
                 element: <MyOrders/>
             },
             {
+                path: '/dashboard/payment/:id',
+                element: <Payment/>,
+                loader: ({params}) => fetch(`http://localhost:5000/dashboard/payment/${params.id}`)
+            },
+            {
                 path: '/dashboard/wishList',
                 element: <WishList/>
             },
             {
-                path: '/dashboard',
+                path: '/dashboard/addProduct',
                 element: <AddProduct/>
             },
             {
