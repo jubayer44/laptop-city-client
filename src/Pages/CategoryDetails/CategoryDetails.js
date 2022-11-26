@@ -77,7 +77,7 @@ const CategoryDetails = () => {
                 <label
                   onClick={() => handleBooking(product)}
                   htmlFor="booking-modal"
-                  className="btn btn-primary w-full my-2 bg-blue"
+                  className="btn btn-primary w-full my-2 bg-blue-500 text-white font-bold rounded-md border-none"
                 >
                   Book Now
                 </label>

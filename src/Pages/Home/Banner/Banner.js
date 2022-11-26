@@ -20,7 +20,7 @@ const Banner = () => {
                 accusantium doloremque laudan, totam rem aperiam, eaque ipsa
                 quae.
               </p>
-              <button className="btn btn-primary btn-sm">Get Start</button>
+              <button className="btn btn-primary border-none my-2 bg-blue-500 text-white font-bold rounded-md">Get Start</button>
             </div>
             <div className="w-full max-w-xl xl:px-8 xl:w-5/12">
               <div></div>

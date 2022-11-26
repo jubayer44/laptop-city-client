@@ -1,134 +1,80 @@
+import { useQuery } from "@tanstack/react-query";
 import React from "react";
 
 const Advertised = () => {
+  const { data: advertiseProducts } = useQuery({
+    queryKey: ["advertiseProducts"],
+    queryFn: async () => {
+      const res = await fetch(`http://localhost:5000/advertise`);
+      const data = res.json();
+      return data;
+    },
+  });
+
   return (
-    <div>
-      <h2 className="text-2xl mt-8 font-bold text-center">Advertised Section</h2>
-      <div className=" py-8 mx-auto  lg:py-8">
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3 sm:mx-auto ">
-          <div className="overflow-hidden transition-shadow duration-300 bg-white rounded">
-            <a href="/" aria-label="Article">
-              <img
-                src="https://images.pexels.com/photos/932638/pexels-photo-932638.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=3&amp;h=750&amp;w=1260"
-                className="object-cover w-full h-64 rounded"
-                alt=""
-              />
-            </a>
-            <div className="p-5">
-              <a
-                href="/"
-                aria-label="Article"
-                className="inline-block mb-3 text-black transition-colors duration-200 hover:text-deep-purple-accent-700"
-              >
-                <p className="text-2xl font-bold leading-5">
-                  Diving to the deep
-                </p>
-              </a>
-              <p className="mb-4 text-gray-700">
-                Location: Dhaka
-              </p>
-              <p className="mb-4 text-gray-700">
-              Resale Price: $120
-              </p>
-              <p className="mb-4 text-gray-700">
-              Original Price: $260
-              </p>
-              <p className="mb-4 text-gray-700">
-              Years of Use: 2 years
-              </p>
-              <p className="mb-4 text-gray-700">
-              Posted on: 12/12/2022 | 11:20 pm
-              </p>
-              <p className="mb-4 text-gray-700">
-                Sed ut perspiciatis unde omnis iste natus error sit sed quia
-                consequuntur magni voluptatem doloremque.
-              </p>
-              <button className="btn btn-primary w-full my-2 bg-blue" >Bye Now</button>
-            </div>
-          </div>
-          <div className="overflow-hidden transition-shadow duration-300 bg-white rounded">
-            <a href="/" aria-label="Article">
-              <img
-                src="https://images.pexels.com/photos/932638/pexels-photo-932638.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=3&amp;h=750&amp;w=1260"
-                className="object-cover w-full h-64 rounded"
-                alt=""
-              />
-            </a>
-            <div className="p-5">
-              <a
-                href="/"
-                aria-label="Article"
-                className="inline-block mb-3 text-black transition-colors duration-200 hover:text-deep-purple-accent-700"
-              >
-                <p className="text-2xl font-bold leading-5">
-                  Diving to the deep
-                </p>
-              </a>
-              <p className="mb-4 text-gray-700">
-                Location: Dhaka
-              </p>
-              <p className="mb-4 text-gray-700">
-              Resale Price: $120
-              </p>
-              <p className="mb-4 text-gray-700">
-              Original Price: $260
-              </p>
-              <p className="mb-4 text-gray-700">
-              Years of Use: 2 years
-              </p>
-              <p className="mb-4 text-gray-700">
-              Posted on: 12/12/2022 | 11:20 pm
-              </p>
-              <p className="mb-4 text-gray-700">
-                Sed ut perspiciatis unde omnis iste natus error sit sed quia
-                consequuntur magni voluptatem doloremque.
-              </p>
-              <button className="btn btn-primary w-full my-2 bg-blue" >Bye Now</button>
-            </div>
-          </div>
-          <div className="overflow-hidden transition-shadow duration-300 bg-white rounded">
-            <a href="/" aria-label="Article">
-              <img
-                src="https://images.pexels.com/photos/932638/pexels-photo-932638.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=3&amp;h=750&amp;w=1260"
-                className="object-cover w-full h-64 rounded"
-                alt=""
-              />
-            </a>
-            <div className="p-5">
-              <a
-                href="/"
-                aria-label="Article"
-                className="inline-block mb-3 text-black transition-colors duration-200 hover:text-deep-purple-accent-700"
-              >
-                <p className="text-2xl font-bold leading-5">
-                  Diving to the deep
-                </p>
-              </a>
-              <p className="mb-4 text-gray-700">
-                Location: Dhaka
-              </p>
-              <p className="mb-4 text-gray-700">
-              Resale Price: $120
-              </p>
-              <p className="mb-4 text-gray-700">
-              Original Price: $260
-              </p>
-              <p className="mb-4 text-gray-700">
-              Years of Use: 2 years
-              </p>
-              <p className="mb-4 text-gray-700">
-              Posted on: 12/12/2022 | 11:20 pm
-              </p>
-              <p className="mb-4 text-gray-700">
-                Sed ut perspiciatis unde omnis iste natus error sit sed quia
-                consequuntur magni voluptatem doloremque.
-              </p>
-              <button className="btn btn-primary w-full my-2 bg-blue" >Bye Now</button>
+    <>
+      {advertiseProducts?.length && (
+        <div>
+          <h2 className="text-2xl mt-8 font-bold text-center">
+            All Laptop in this Category
+          </h2>
+          <div className=" py-8 mx-auto  lg:py-8">
+            <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3 sm:mx-auto ">
+              {advertiseProducts?.map((product) => (
+                <div
+                  className="overflow-hidden transition-shadow shadow-lg duration-300 bg-white rounded"
+                  key={product._id}
+                >
+                  <div aria-label="Article">
+                    <img
+                      src={product.img}
+                      className="object-cover w-full h-64 rounded"
+                      alt=""
+                    />
+                  </div>
+                  <div className="p-5">
+                    <div
+                      aria-label="Article"
+                      className="inline-block mb-3 duration-200 hover:text-purple-700"
+                    >
+                      <p className="text-xl font-semibold ">
+                        {product.productName}
+                      </p>
+                    </div>
+                    <p className="mb-4 text-gray-700">
+                      Location: {product.location}
+                    </p>
+                    <p className="mb-4 text-gray-700">
+                      Resale Price: ${product.resalePrice}
+                    </p>
+                    <p className="mb-4 text-gray-700">
+                      Original Price: ${product.originalPrice}
+                    </p>
+                    <p className="mb-4 text-gray-700">
+                      Condition: {product.Condition}
+                    </p>
+                    <p className="mb-4 text-gray-700">
+                      Years of Use: {product.use}
+                    </p>
+                    <p className="mb-4 text-gray-700">
+                      Posted on: ${product.postedDate} | {product.postedTime}
+                    </p>
+                    <p className="mb-4 text-gray-700">Seller: Jack</p>
+                    <label
+                      // onClick={() => handleBooking(product)}
+                      htmlFor="booking-modal"
+                      className="btn btn-primary w-full my-2 bg-blue-500 text-white font-bold rounded-md"
+                    >
+                      Book Now
+                    </label>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 

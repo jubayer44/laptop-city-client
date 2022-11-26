@@ -1,14 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import Spinner from "../../components/Spinner";
 import { AuthContext } from "../../Context/AuthProvider";
 
 const AddProduct = () => {
     const {user} = useContext(AuthContext);
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const date = new Date();
 
@@ -27,6 +29,7 @@ const AddProduct = () => {
 
   const handleAddProduct = (data) => {
     const img = data.image[0];
+    setLoading(true);
 
     const formData = new FormData();
     formData.append("image", img);
@@ -66,6 +69,7 @@ const AddProduct = () => {
                 .then((res) => res.json())
                 .then((d) => {
                   toast.success("product successfully added");
+                  setLoading(false);
                   navigate('/dashboard/myproducts')
                 })
                 .catch((err) => {
@@ -80,6 +84,10 @@ const AddProduct = () => {
         console.log(err);
       });
   };
+
+  if(loading){
+    return <div className="h-screen flex items-center"><Spinner/></div>
+  }
 
   return (
     <div className="max-w-screen-xl px-8 py-16 mx-auto rounded-lg  md:px-12 lg:px-16 xl:px-32">
@@ -111,7 +119,7 @@ const AddProduct = () => {
               required
               type="text"
               placeholder="product name"
-              className="w-full p-3 rounded border border-2"
+              className="w-full p-3 rounded border-2"
             />
           </div>
           <div>
@@ -124,7 +132,7 @@ const AddProduct = () => {
               required
               placeholder="resale price"
               type="number"
-              className="w-full p-3 rounded border border-2"
+              className="w-full p-3 rounded border-2"
             />
           </div>
           <div>
@@ -137,7 +145,7 @@ const AddProduct = () => {
               required
               placeholder="original Price"
               type="number"
-              className="w-full p-3 rounded border border-2"
+              className="w-full p-3 rounded border-2"
             />
           </div>
           <div>
@@ -164,7 +172,7 @@ const AddProduct = () => {
             <select
               {...register("Condition")}
               required
-              className="select w-full p-3 rounded border border-2 bg-white"
+              className="select w-full p-3 rounded border-2 bg-white"
             >
               <option selected>Excellent</option>
               <option>Good</option>
@@ -193,7 +201,7 @@ const AddProduct = () => {
               placeholder="your phone"
               id=""
               type="number"
-              className="w-full p-3 rounded border border-2"
+              className="w-full p-3 rounded border-2"
             />
           </div>
           <div>
@@ -206,7 +214,7 @@ const AddProduct = () => {
               placeholder="location"
               id=""
               type="text"
-              className="w-full p-3 rounded border border-2"
+              className="w-full p-3 rounded border-2"
             />
           </div>
         </div>
@@ -220,7 +228,7 @@ const AddProduct = () => {
             placeholder="year or purchase"
             id=""
             type="text"
-            className="w-full p-3 rounded border border-2"
+            className="w-full p-3 rounded border-2"
           />
         </div>
         <div>
@@ -232,7 +240,7 @@ const AddProduct = () => {
             id="message"
             placeholder="description"
             rows="3"
-            className="w-full p-3 rounded border border-2"
+            className="w-full p-3 rounded border-2"
           ></textarea>
         </div>
         <button
