@@ -14,7 +14,7 @@ const Categories = () => {
       setLoader(false);
     })
     .catch(err => console.log(err));
-  })
+  }, [])
 
     if(loader){
       return <Spinner/>

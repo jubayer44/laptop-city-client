@@ -55,7 +55,7 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard/payment/:id',
                 element: <Payment/>,
-                loader: ({params}) => fetch(`http://localhost:5000/dashboard/payment/${params.id}`)
+                loader: ({params}) => fetch(`${process.env.REACT_APP_URL}/dashboard/payment/${params.id}`)
             },
             {
                 path: '/dashboard/wishList',

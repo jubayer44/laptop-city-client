@@ -4,7 +4,6 @@ import { Elements } from "@stripe/react-stripe-js";
 import CheckOutForm from "./CheckOutForm";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PK);
-console.log(stripePromise);
 
 const Payment = () => {
   const data = useLoaderData();

@@ -16,7 +16,7 @@ const Advertised = () => {
       {advertiseProducts?.length && (
         <div>
           <h2 className="text-2xl mt-8 font-bold text-center">
-            All Laptop in this Category
+            Advertise Section
           </h2>
           <div className=" py-8 mx-auto  lg:py-8">
             <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3 sm:mx-auto ">
