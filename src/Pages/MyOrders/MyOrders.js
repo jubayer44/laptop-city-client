@@ -77,20 +77,29 @@ const MyOrders = () => {
                 </td>
                 <td>${booking?.productPrice}</td>
                 <td>
+                  {booking?.sold && booking?.paymentEmail === user?.email && (
+                    <span className="px-2 font-bold text-green-500">Paid</span>
+                  )}
+                  {booking?.sold && booking?.paymentEmail !== user?.email && (
+                    <span className="px-2 font-bold text-red-500">Not Available</span>
+                  )}
+                  {!booking?.sold && (
+                    <Link
+                      to={`/dashboard/payment/${booking?._id}`}
+                      className="btn btn-primary btn-sm rounded md bg-green-500 px-6"
+                    >
+                      Pay
+                    </Link>
+                  )}
+                  
                   {
-                    booking?.sold && booking?.paymentEmail === user?.email ? <p className="font-bold text-green-500">Paid</p> :  <Link
-                    to={`/dashboard/payment/${booking?._id}`}
-                    className="btn btn-primary btn-sm rounded md bg-green-500 px-6"
-                  >
-                    Pay
-                  </Link>
-                  }
-                  <button
+                    booking?.paymentEmail !== user?.email && <button
                     onClick={() => handleOrderCancel(booking?._id)}
                     className="btn btn-primary btn-sm rounded md bg-red-500 ml-2 border-none"
                   >
-                    Cancel
-                  </button>
+                    Delete
+                  </button> 
+                  }
                 </td>
               </tr>
             );
