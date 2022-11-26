@@ -19,7 +19,7 @@ const MyOrders = () => {
   }, [user?.email]);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/myorders?email=${user?.email}`, {
+    fetch(`${process.env.REACT_APP_URL}/myorders?email=${user?.email}`, {
       headers: {
         authorization: `Bearer ${localStorage.getItem("access_token")}`,
       },

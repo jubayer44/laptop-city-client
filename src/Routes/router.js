@@ -6,17 +6,20 @@ import AllBuyers from "../Pages/AllBuyers/AllBuyers";
 import AllSellers from "../Pages/AllSellers/AllSellers";
 import Blog from "../Pages/Blog/Blog";
 import CategoryDetails from "../Pages/CategoryDetails/CategoryDetails";
+import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login/Login";
 import MyOrders from "../Pages/MyOrders/MyOrders";
 import MyProducts from "../Pages/MyProducts/MyProducts";
 import SignUp from "../Pages/SignUp/SignUp";
+import WishList from "../Pages/WishLish/WishList";
 import PrivateRoutes from "./PrivateRoutes";
 
 const router = createBrowserRouter([
     {
         path: '/',
         element: <Main/>,
+        errorElement: <ErrorPage/>,
         children: [
             {
                 path: '/',
@@ -45,11 +48,15 @@ const router = createBrowserRouter([
         element: <PrivateRoutes><DashboardLayouts/></PrivateRoutes>,
         children: [
             {
-                path: '/dashboard/myorders',
+                path: '/dashboard',
                 element: <MyOrders/>
             },
             {
-                path: '/dashboard/addproduct',
+                path: '/dashboard/wishList',
+                element: <WishList/>
+            },
+            {
+                path: '/dashboard',
                 element: <AddProduct/>
             },
             {
@@ -57,7 +64,7 @@ const router = createBrowserRouter([
                 element: <MyProducts/>
             },
             {
-                path: '/dashboard/allsellers',
+                path: '/dashboard',
                 element: <AllSellers/>
             },
             {

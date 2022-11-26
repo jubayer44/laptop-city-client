@@ -9,7 +9,7 @@ const MyProducts = () => {
   const {data: myProducts}= useQuery({
     queryKey: ['myProducts'],
     queryFn: async()=> {
-      const res = await fetch(`http://localhost:5000/myProducts?email=${user?.email}`, {
+      const res = await fetch(`${process.env.REACT_APP_URL}/myProducts?email=${user?.email}`, {
         headers: {
           authorization: `Bearer ${localStorage.getItem('access_token')}`
         }
@@ -20,7 +20,7 @@ const MyProducts = () => {
   });
 
   const handleAdvertise = (id) => {
-    fetch(`http://localhost:5000/advertise/${id}`, {
+    fetch(`${process.env.REACT_APP_URL}/advertise/${id}`, {
       method: 'PUT',
       headers: {
         'content-type': 'application/json'
@@ -42,7 +42,7 @@ const MyProducts = () => {
     const confirm = window.confirm('are you sure you want to delete')
 
     if(confirm){
-      fetch(`http://localhost:5000/advertise?id=${id}`, {
+      fetch(`${process.env.REACT_APP_URL}/advertise?id=${id}`, {
         method: 'DELETE'
       })
       .then(res => res.json())

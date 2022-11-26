@@ -51,18 +51,20 @@ const DashboardLayouts = () => {
           <div className="menu p-4 w-80 bg-gray-200 text-base-content">
             
               {
-                currentUser?.role === "Buyer" && <Link className="p-3 bg-blue-200 rounded-md mb-2 font-semibold" to='/dashboard/myorders'>My Orders</Link>
+                currentUser?.role === "Buyer" && <><Link className="p-3 bg-blue-200 rounded-md mb-2 font-semibold" to='/dashboard'>My Orders</Link>
+                <Link className="p-3 bg-blue-200 rounded-md mb-2 font-semibold" to='/dashboard/wishList'>Wish List</Link>
+                </>
               }
             
             
               {
-                currentUser?.role === "Seller" && <><Link className="p-3 bg-blue-200 rounded-md mb-2 font-semibold" to='/dashboard/addproduct'>Add a Product</Link>
+                currentUser?.role === "Seller" && <><Link className="p-3 bg-blue-200 rounded-md mb-2 font-semibold" to='/dashboard'>Add a Product</Link>
                <Link className="p-3 bg-blue-200 rounded-md mb-2 font-semibold" to='/dashboard/myproducts'>My Products</Link></>
               }
             
             
               {
-                currentUser?.role === "Admin" && <> <Link className="p-3 bg-blue-200 rounded-md mb-2 font-semibold" to='/dashboard/allsellers'> All Sellers</Link> 
+                currentUser?.role === "Admin" && <> <Link className="p-3 bg-blue-200 rounded-md mb-2 font-semibold" to='/dashboard'> All Sellers</Link> 
                 <Link className="p-3 bg-blue-200 rounded-md mb-2 font-semibold" to='/dashboard/allbuyers'>All Buyers</Link>
                 </>
                 

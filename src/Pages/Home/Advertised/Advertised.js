@@ -5,7 +5,7 @@ const Advertised = () => {
   const { data: advertiseProducts } = useQuery({
     queryKey: ["advertiseProducts"],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/advertise`);
+      const res = await fetch(`${process.env.REACT_APP_URL}/advertise`);
       const data = res.json();
       return data;
     },
