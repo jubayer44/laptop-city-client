@@ -86,8 +86,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/dashboard/report',
-                element: <AdminRoutes><ReportedItems/></AdminRoutes>,
-                loader: ()=> fetch(`${process.env.REACT_APP_URL}/report`)
+                element: <AdminRoutes><ReportedItems/></AdminRoutes>
             }
         ]
        

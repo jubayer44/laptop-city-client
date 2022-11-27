@@ -81,7 +81,7 @@ const CategoryDetails = () => {
         }
       })
       .catch(err => console.error(err.message));
-    }
+    };
   
  
 

@@ -1,10 +1,40 @@
+import { useQuery } from '@tanstack/react-query';
 import React from 'react';
-import { useLoaderData } from 'react-router-dom';
 
 const ReportedItems = () => {
 
-const reportedItems = useLoaderData();
-// console.log(reportedItems);
+const {data: reportedItems= []} = useQuery({
+    queryKey: ['reportedItems'],
+    queryFn: async()=> {
+        const res = await fetch(`${process.env.REACT_APP_URL}/report`);
+        const data = await res.json();
+        return data;
+    }
+})
+
+
+
+const handleDeleteReportedItem = item => {
+    const confirm = window.confirm('Are you sure you want to delete');
+    if(confirm){
+        fetch(`http://localhost:5000/report/${item?._id}`,{
+        method: "DELETE",
+        headers: {
+            "content-type": "application/json"
+        },
+        body: JSON.stringify({item})
+    } 
+    )
+    .then(res => res.json())
+    .then(data => {
+        console.log(data);
+    })
+    }
+
+
+
+
+};
 
 
     return (
@@ -14,10 +44,10 @@ const reportedItems = useLoaderData();
         <thead>
           <tr>
             <th></th>
-            <th>Name</th>
-            <th>Email</th>
+            <th>Product Name</th>
+            <th>Reporter Name</th>
+            <th>Reporter Email</th>
             <th>Action</th>
-            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -25,12 +55,13 @@ const reportedItems = useLoaderData();
             return (
               <tr key={item?._id}>
                 <th>{i + 1}</th>
+                <td>{item?.productName}</td>
                 <td>{item?.name}</td>
                 <td>{item?.email}</td>
                 
                 <td>
                   <button
-                    //   onClick={() => handleBuyerDelete(user?._id)}
+                      onClick={() => handleDeleteReportedItem(item)}
                     className="btn btn-primary btn-sm rounded md bg-red-500 ml-2 border-none text-white normal-case"
                   >
                     Delete

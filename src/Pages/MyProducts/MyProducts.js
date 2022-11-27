@@ -24,7 +24,6 @@ const MyProducts = () => {
     return <Spinner/>
   }
 
-  console.log(myProducts);
 
   const handleAdvertise = (id) => {
     fetch(`${process.env.REACT_APP_URL}/advertise/${id}`, {
