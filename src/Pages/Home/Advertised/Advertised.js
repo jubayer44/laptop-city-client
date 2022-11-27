@@ -21,14 +21,13 @@ const Advertised = () => {
 
 
   useEffect(()=> {
-    fetch(`${process.env.REACT_APP_URL}/user?email=${user?.email}`)
+    fetch(`http://localhost:5000/user?email=${user?.email}`)
     .then(res => res.json())
     .then(data => {
-      if(data.role === "Buyer"){
-        setUserRole(data.role);
+      if(data?.role === "Buyer"){
+        setUserRole(data?.role);
       }
     })
-    .catch(err => console.error(err))
   }, [user?.email]);
 
 

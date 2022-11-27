@@ -23,7 +23,8 @@ const BookingModal = ({ product, setModal }) => {
       fetch(`${process.env.REACT_APP_URL}/bookings?email=${user?.email}`, {
         method: "POST",
         headers: {
-          'content-type': 'application/json'
+          'content-type': 'application/json',
+          'authorization': `Bearer ${localStorage.getItem('access_token')}`
         },
         body: JSON.stringify(bookingData)
       })

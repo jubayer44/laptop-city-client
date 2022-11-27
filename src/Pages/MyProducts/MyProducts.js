@@ -36,7 +36,7 @@ const MyProducts = () => {
     .then(res => res.json())
     .then(data => {
       if(data.acknowledged){
-        toast.success('Product advertise successfully')
+        toast.success('Add to advertise successfully')
       }
       else {
         toast.error(data.message);
@@ -99,7 +99,7 @@ const MyProducts = () => {
             }
             <button onClick={()=> handleDelete(product._id)} className="btn btn-primary rounded-md btn-sm bg-red-500 hover:bg-red-500 font-bold border-none mt-2 text-white">Delete</button>
             {
-              product?.status && product?.status === "Sold" ? null : <button onClick={()=>handleAdvertise(product._id)} className="btn btn-primary rounded-md btn-sm ml-4 font-bold border-none mt-2">Advertised </button>
+              !product?.sold && <button onClick={()=>handleAdvertise(product._id)} className="btn btn-primary rounded-md btn-sm ml-4 font-bold border-none mt-2">Advertised </button>
             }
           </div>
         </div>))

@@ -17,6 +17,24 @@ const AllSellers = () => {
       });
   }, [load]);
 
+  const handleVerify = id => {
+    fetch(`http://localhost:5000/userVerify?id=${id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+        'authorization': `Bearer ${localStorage.getItem('access_token')}`
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      if(data?.acknowledged){
+        setLoad(true)
+        toast.success('User verified successfully')
+      }
+    })   
+    .catch(err => console.log(err.message));
+  };
+
   const handleSellerDelete = id => {
     const confirm = window.confirm('Are you sure you want to delete')
     if(confirm){
@@ -60,9 +78,9 @@ const AllSellers = () => {
                 <td>{user?.email}</td>
                 <td>
                     {
-                        user?.status ? <span className="text-green-500 font-bold">Verified</span> 
+                        user?.isVerified ? <span className="text-green-500 font-bold">Verified</span> 
                         :
-                        <span className="btn btn-sm rounded-md btn-outline">verify</span>
+                        <span onClick={()=>handleVerify(user?._id)} className="btn btn-sm rounded-md btn-outline">verify</span>
                     }
                 </td>
                 <td>

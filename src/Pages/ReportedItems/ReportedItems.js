@@ -6,7 +6,9 @@ const ReportedItems = () => {
 const {data: reportedItems= []} = useQuery({
     queryKey: ['reportedItems'],
     queryFn: async()=> {
-        const res = await fetch(`${process.env.REACT_APP_URL}/report`);
+        const res = await fetch(`${process.env.REACT_APP_URL}/report`, {
+          headers: {"authorization": `Bearer ${localStorage.getItem('access_token')}`}
+        });
         const data = await res.json();
         return data;
     }
@@ -20,7 +22,8 @@ const handleDeleteReportedItem = item => {
         fetch(`http://localhost:5000/report/${item?._id}`,{
         method: "DELETE",
         headers: {
-            "content-type": "application/json"
+            "content-type": "application/json", 
+            "authorization": `Bearer ${localStorage.getItem('access_token')}`
         },
         body: JSON.stringify({item})
     } 

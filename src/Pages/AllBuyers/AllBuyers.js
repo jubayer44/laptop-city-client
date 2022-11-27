@@ -47,7 +47,6 @@ const AllBuyers = () => {
             <th></th>
             <th>Name</th>
             <th>Email</th>
-            <th>Status</th>
             <th>Action</th>
             <th></th>
           </tr>
@@ -59,13 +58,6 @@ const AllBuyers = () => {
                 <th>{i + 1}</th>
                 <td>{user?.name}</td>
                 <td>{user?.email}</td>
-                <td>
-                    {
-                        user?.status ? <span className="text-green-500 font-bold">Verified</span> 
-                        :
-                        <span className="btn btn-sm rounded-md btn-outline">verify</span>
-                    }
-                </td>
                 <td>
                   <button
                       onClick={() => handleBuyerDelete(user?._id)}
