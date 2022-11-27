@@ -1,12 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
 import toast from 'react-hot-toast';
+import Spinner from '../../components/Spinner';
 import { AuthContext } from '../../Context/AuthProvider';
 
 const MyProducts = () => {
   const {user} = useContext(AuthContext);
 
-  const {data: myProducts}= useQuery({
+  const {data: myProducts = [], isLoading}= useQuery({
     queryKey: ['myProducts'],
     queryFn: async()=> {
       const res = await fetch(`${process.env.REACT_APP_URL}/myProducts?email=${user?.email}`, {
@@ -18,6 +19,12 @@ const MyProducts = () => {
       return data;
     }
   });
+
+  if(isLoading){
+    return <Spinner/>
+  }
+
+  console.log(myProducts);
 
   const handleAdvertise = (id) => {
     fetch(`${process.env.REACT_APP_URL}/advertise/${id}`, {
@@ -62,7 +69,7 @@ const MyProducts = () => {
     return (
         <div className="px-4 mx-auto md:max-w-full ">
           <h2 className="text-2xl font-bold text-center mb-4">My Products</h2>
-      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 lg:max-w-full">
+      <div className="grid gap-8 md:grid-cols-2 lg:max-w-full">
         {
           myProducts?.map(product => (<div
           key={product._id}
@@ -85,13 +92,13 @@ const MyProducts = () => {
              Price: <strong>${product.resalePrice}</strong>
             </p>
             {
-              product?.status && product?.status === "Sold" ? <p className="mb-2 text-gray-700">
+              product?.sold ? <p className="mb-2 text-gray-700">
               Status: <strong className='text-green-500'>Sold</strong>
              </p> : <p className="mb-2 text-gray-700">
-             Status: <strong className='text-red-500'>Unsold</strong>
+             Status: <strong className='text-green-500'>Available</strong>
             </p>
             }
-            <button onClick={()=> handleDelete(product._id)} className="btn btn-primary rounded-md btn-sm bg-red-500 hover:bg-red-500 font-bold border-none mt-2">Delete</button>
+            <button onClick={()=> handleDelete(product._id)} className="btn btn-primary rounded-md btn-sm bg-red-500 hover:bg-red-500 font-bold border-none mt-2 text-white">Delete</button>
             {
               product?.status && product?.status === "Sold" ? null : <button onClick={()=>handleAdvertise(product._id)} className="btn btn-primary rounded-md btn-sm ml-4 font-bold border-none mt-2">Advertised </button>
             }

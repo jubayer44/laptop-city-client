@@ -6,14 +6,17 @@ const AllBuyers = () => {
   const [load, setLoad ] = useState(false);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_URL}/users?role=Buyer`)
+    fetch(`${process.env.REACT_APP_URL}/users?role=Buyer`, {
+        headers: {
+            "authorization": `Bearer ${localStorage.getItem('access_token')}`
+        }
+    })
       .then((res) => res.json())
       .then((data) => {
         setUser(data);
       });
   }, [load]);
 
-  console.log(users);
 
   const handleBuyerDelete = id => {
     const confirm = window.confirm('Are you sure you want to delete')
@@ -21,7 +24,8 @@ const AllBuyers = () => {
         fetch(`${process.env.REACT_APP_URL}/user/${id}`, {
             method: "DELETE",
             headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                "authorization": `Bearer ${localStorage.getItem('access_token')}`
             },
     
         })

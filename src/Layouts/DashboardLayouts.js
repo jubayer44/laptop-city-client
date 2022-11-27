@@ -11,7 +11,7 @@ const DashboardLayouts = () => {
   const {user} = useContext(AuthContext);
   const [isAdmin] = useAdmin(user?.email);
 
-  const {data: currentUser} = useQuery({
+  const {data: currentUser = []} = useQuery({
       queryKey: ['user'],
       queryFn: async() => {
         const res = await fetch(`${process.env.REACT_APP_URL}/user?email=${user?.email}`)

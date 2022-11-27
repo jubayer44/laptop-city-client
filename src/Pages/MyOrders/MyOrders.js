@@ -3,13 +3,16 @@ import axios from "axios";
 import { AuthContext } from "../../Context/AuthProvider";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
+import Spinner from "../../components/Spinner";
 
 const MyOrders = () => {
   const [bookingsData, setBookingsData] = useState([]);
   const { user } = useContext(AuthContext);
   const [deleted, setDeleted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(`${process.env.REACT_APP_URL}/myorders?email=${user?.email}`, {
         headers: {
@@ -18,8 +21,10 @@ const MyOrders = () => {
       })
       .then((data) => {
         setBookingsData(data?.data);
+        setLoading(false)
       });
   }, [user?.email, deleted]);
+
 
 
   const handleOrderCancel = (id) => {
@@ -27,8 +32,7 @@ const MyOrders = () => {
       "Are you sure you want to cancel this order"
     );
     if (confirm) {
-      axios(`${process.env.REACT_APP_URL}/myOrders/${id}`, {
-        method: "DELETE",
+      axios.delete(`${process.env.REACT_APP_URL}/myOrders/${id}`, {
         headers: {'authorization': `Bearer ${localStorage.getItem('access_token')}`},
       }).then((data) => {
         if (data.data.acknowledged) {
@@ -38,6 +42,10 @@ const MyOrders = () => {
       });
     }
   };
+
+  if(loading){
+    return <Spinner className='text-red-500'/>
+  }
 
   return (
     <div className="overflow-x-auto w-full">
@@ -49,7 +57,6 @@ const MyOrders = () => {
             <th>Title</th>
             <th>Price</th>
             <th>Action</th>
-            <th></th>
           </tr>
         </thead>
         <tbody>

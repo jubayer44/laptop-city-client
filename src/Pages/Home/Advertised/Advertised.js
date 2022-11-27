@@ -1,8 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useState } from "react";
+import BookingModal from "../../BookingModal/BookingModal";
 
 const Advertised = () => {
-  const { data: advertiseProducts } = useQuery({
+  const [modalInfo, setModalInfo] = useState(null);
+  const [modal, setModal] = useState(false);
+  
+  const { data: advertiseProducts = [] } = useQuery({
     queryKey: ["advertiseProducts"],
     queryFn: async () => {
       const res = await fetch(`${process.env.REACT_APP_URL}/advertise`);
@@ -10,6 +14,11 @@ const Advertised = () => {
       return data;
     },
   });
+
+  const handleBooking =(product) => {
+    setModal(true);
+      setModalInfo(product);
+  };
 
   return (
     <>
@@ -61,11 +70,11 @@ const Advertised = () => {
                     </p>
                     <p className="mb-4 text-gray-700">Seller: Jack</p>
                     <label
-                      // onClick={() => handleBooking(product)}
+                      onClick={() => handleBooking(product)}
                       htmlFor="booking-modal"
                       className="btn btn-primary w-full my-2 bg-blue-500 text-white font-bold rounded-md"
                     >
-                      Book Now
+                      Buy Now
                     </label>
                   </div>
                 </div>
@@ -74,6 +83,9 @@ const Advertised = () => {
           </div>
         </div>
       )}
+      {
+        modal && <BookingModal product={modalInfo} setModal={setModal}/>
+      }
     </>
   );
 };

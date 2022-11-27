@@ -9,7 +9,7 @@ const CategoryDetails = () => {
 
   const id = window.location.pathname.split("/")[2];
 
-  const {data: products, isLoading} = useQuery({
+  const {data: products = [], isLoading} = useQuery({
     queryKey: ['products'],
     queryFn: async()=> {
       const res = await fetch(`${process.env.REACT_APP_URL}/products?id=${id}`)
@@ -80,7 +80,7 @@ const CategoryDetails = () => {
                   htmlFor="booking-modal"
                   className="btn btn-primary w-full my-2 bg-blue-500 text-white font-bold rounded-md border-none"
                 >
-                  Book Now
+                  Buy Now
                 </label>
               </div>
             </div>

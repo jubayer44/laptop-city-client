@@ -6,7 +6,11 @@ const AllSellers = () => {
   const [load, setLoad ] = useState(false);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_URL}/users?role=Seller`)
+    fetch(`${process.env.REACT_APP_URL}/users?role=Seller`, {
+        headers: {
+            "authorization": `Bearer ${localStorage.getItem("access_token")}`
+        }
+    })
       .then((res) => res.json())
       .then((data) => {
         setUser(data);
@@ -19,7 +23,8 @@ const AllSellers = () => {
         fetch(`${process.env.REACT_APP_URL}/user/${id}`, {
             method: "DELETE",
             headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                "authorization": `Bearer ${localStorage.getItem('access_token')}`
             },
     
         })

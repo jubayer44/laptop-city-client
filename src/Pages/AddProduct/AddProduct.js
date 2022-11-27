@@ -18,7 +18,7 @@ const AddProduct = () => {
     date.getDate() + "/" + date.getMonth() + "/" + date.getYear();
   const postedTime = date.getHours() + ":" + date.getMinutes();
 
-  const { data: categories } = useQuery({
+  const { data: categories = [] } = useQuery({
     queryKey: ["categories"],
     queryFn: async () => {
       const res = await fetch(`${process.env.REACT_APP_URL}/categories`);
