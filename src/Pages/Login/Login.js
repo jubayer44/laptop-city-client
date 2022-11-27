@@ -43,7 +43,6 @@ const Login = () => {
     googleLogIn()
       .then((res) => {
         const user = res.user;
-        console.log(user);
         addUser(user, setLoading, setUsr);
       })
       .catch((err) => {
