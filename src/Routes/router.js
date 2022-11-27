@@ -13,6 +13,7 @@ import Login from "../Pages/Login/Login";
 import MyOrders from "../Pages/MyOrders/MyOrders";
 import MyProducts from "../Pages/MyProducts/MyProducts";
 import Payment from "../Pages/Payment/Payment";
+import ReportedItems from "../Pages/ReportedItems/ReportedItems";
 import SignUp from "../Pages/SignUp/SignUp";
 import WishList from "../Pages/WishLish/WishList";
 import AdminRoutes from "./AdminRoutes";
@@ -83,6 +84,11 @@ const router = createBrowserRouter([
                 path: '/dashboard/allBuyers',
                 element: <AdminRoutes><AllBuyers/></AdminRoutes>
             },
+            {
+                path: '/dashboard/report',
+                element: <AdminRoutes><ReportedItems/></AdminRoutes>,
+                loader: ()=> fetch(`${process.env.REACT_APP_URL}/report`)
+            }
         ]
        
     }

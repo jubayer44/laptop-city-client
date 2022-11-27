@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { Link, Outlet } from "react-router-dom";
 import Footer from "../Pages/Shared/Footer/Footer";
 import Navbar from "../Pages/Shared/Navbar/Navbar";
-// import axios from "axios";
 import { AuthContext } from "../Context/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
 import useAdmin from "../hooks/useAdmin";
@@ -68,6 +67,7 @@ const DashboardLayouts = () => {
               {
                 isAdmin && <> <Link className="p-3 bg-blue-200 rounded-md mb-2 font-semibold" to='/dashboard/allSellers'> All Sellers</Link> 
                 <Link className="p-3 bg-blue-200 rounded-md mb-2 font-semibold" to='/dashboard/allBuyers'>All Buyers</Link>
+                <Link className="p-3 bg-blue-200 rounded-md mb-2 font-semibold" to='/dashboard/report'>Reported Items</Link>
                 </>
                 
               }

@@ -1,11 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
-import React, {  useState } from "react";
+import React, {  useContext, useEffect, useState } from "react";
 import BookingModal from "../BookingModal/BookingModal";
 import Spinner from "../../components/Spinner";
+import { AuthContext } from "../../Context/AuthProvider";
+import toast from "react-hot-toast";
 
 const CategoryDetails = () => {
+  const {user} = useContext(AuthContext);
   const [modalInfo, setModalInfo] = useState(null);
   const [modal, setModal] = useState(false);
+  const [userRole, setUserRole] = useState('');
 
   const id = window.location.pathname.split("/")[2];
 
@@ -16,7 +20,19 @@ const CategoryDetails = () => {
       const data = res.json();
       return data;
     }
-  })
+  });
+
+  useEffect(()=> {
+    fetch(`${process.env.REACT_APP_URL}/user?email=${user?.email}`)
+    .then(res => res.json())
+    .then(data => {
+      if(data.role === "Buyer"){
+        setUserRole(data.role);
+      }
+    })
+    .catch(err => console.error(err))
+  }, [user?.email]);
+
 
 
   if (isLoading) {
@@ -24,9 +40,51 @@ const CategoryDetails = () => {
   }
 
   const handleBooking =(product) => {
+    if(!userRole){
+      toast.error('Only Buyer can Booked a product')
+      return
+    }
     setModal(true);
       setModalInfo(product);
   };
+
+  
+
+
+
+  const handleReportToAdmin = (product) => {
+      if(!userRole){
+        toast.error("Only Buyer can report a product");
+        return;
+      }
+      const reportedUser = {
+        name: user?.displayName,
+        email: user?.email,
+        reportedId: product._id,
+        productName: product.productName
+      };
+  
+      fetch(`${process.env.REACT_APP_URL}/report`, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify(reportedUser)
+      })
+      .then(res => res.json())
+      .then(data => {
+        if(data.acknowledged){
+            toast.success('Report Successfully Sent')
+        }
+        else{
+          toast.error(data.message);
+        }
+      })
+      .catch(err => console.error(err.message));
+    }
+  
+ 
+
 
   return (
     <div>
@@ -82,6 +140,9 @@ const CategoryDetails = () => {
                 >
                   Buy Now
                 </label>
+                <button
+                onClick={()=> handleReportToAdmin(product)}
+                className="btn btn-primary w-full my-2 bg-blue-500 text-white font-bold rounded-md border-none">Report</button>
               </div>
             </div>
           ))}
