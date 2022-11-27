@@ -21,7 +21,6 @@ const MyOrders = () => {
       });
   }, [user?.email, deleted]);
 
-  console.log(bookingsData);
 
   const handleOrderCancel = (id) => {
     const confirm = window.confirm(
@@ -30,12 +29,12 @@ const MyOrders = () => {
     if (confirm) {
       axios(`${process.env.REACT_APP_URL}/myOrders/${id}`, {
         method: "DELETE",
+        headers: {'authorization': `Bearer ${localStorage.getItem('access_token')}`},
       }).then((data) => {
         if (data.data.acknowledged) {
           setDeleted(!deleted);
           toast.success("Product deleted successfully");
         }
-        console.log();
       });
     }
   };
@@ -92,14 +91,12 @@ const MyOrders = () => {
                     </Link>
                   )}
                   
-                  {
-                    booking?.paymentEmail !== user?.email && <button
+                    <button
                     onClick={() => handleOrderCancel(booking?._id)}
-                    className="btn btn-primary btn-sm rounded md bg-red-500 ml-2 border-none"
+                    className="btn btn-primary btn-sm rounded md bg-red-500 ml-2 border-none text-white normal-case"
                   >
                     Delete
                   </button> 
-                  }
                 </td>
               </tr>
             );

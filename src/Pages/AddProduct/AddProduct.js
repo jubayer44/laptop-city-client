@@ -63,6 +63,7 @@ const AddProduct = () => {
                 method: "POST",
                 headers: {
                   "content-type": "application/json",
+                  "authorization": `Bearer ${localStorage.getItem("access_token")}}`
                 },
                 body: JSON.stringify(productData),
               })

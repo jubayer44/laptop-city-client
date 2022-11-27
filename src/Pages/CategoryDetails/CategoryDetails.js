@@ -18,7 +18,6 @@ const CategoryDetails = () => {
     }
   })
 
-  console.log(products);
 
   if (isLoading) {
     return <Spinner />;

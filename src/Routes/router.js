@@ -6,6 +6,7 @@ import AllBuyers from "../Pages/AllBuyers/AllBuyers";
 import AllSellers from "../Pages/AllSellers/AllSellers";
 import Blog from "../Pages/Blog/Blog";
 import CategoryDetails from "../Pages/CategoryDetails/CategoryDetails";
+import Dashboard from "../Pages/Dashboard/Dashboard";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login/Login";
@@ -14,6 +15,7 @@ import MyProducts from "../Pages/MyProducts/MyProducts";
 import Payment from "../Pages/Payment/Payment";
 import SignUp from "../Pages/SignUp/SignUp";
 import WishList from "../Pages/WishLish/WishList";
+import AdminRoutes from "./AdminRoutes";
 import PrivateRoutes from "./PrivateRoutes";
 
 const router = createBrowserRouter([
@@ -50,6 +52,10 @@ const router = createBrowserRouter([
         children: [
             {
                 path: '/dashboard',
+                element: <Dashboard/>
+            },
+            {
+                path: '/dashboard/myOrders',
                 element: <MyOrders/>
             },
             {
@@ -70,12 +76,12 @@ const router = createBrowserRouter([
                 element: <MyProducts/>
             },
             {
-                path: '/dashboard',
-                element: <AllSellers/>
+                path: '/dashboard/allSellers',
+                element: <AdminRoutes><AllSellers/></AdminRoutes>
             },
             {
-                path: '/dashboard/allbuyers',
-                element: <AllBuyers/>
+                path: '/dashboard/allBuyers',
+                element: <AdminRoutes><AllBuyers/></AdminRoutes>
             },
         ]
        

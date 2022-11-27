@@ -23,7 +23,8 @@ const MyProducts = () => {
     fetch(`${process.env.REACT_APP_URL}/advertise/${id}`, {
       method: 'PUT',
       headers: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
+        'authorization': `Bearer ${localStorage.getItem('access_token')}`
       }
     })
     .then(res => res.json())
@@ -43,7 +44,8 @@ const MyProducts = () => {
 
     if(confirm){
       fetch(`${process.env.REACT_APP_URL}/advertise?id=${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {'authorization': `Bearer ${localStorage.getItem('access_token')}`}
       })
       .then(res => res.json())
       .then(data => {
