@@ -17,8 +17,8 @@ const AllSellers = () => {
       });
   }, [load]);
 
-  const handleVerify = id => {
-    fetch(`http://localhost:5000/userVerify?id=${id}`, {
+  const handleVerify = email => {
+    fetch(`${process.env.REACT_APP_URL}/userVerify?email=${email}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -28,7 +28,7 @@ const AllSellers = () => {
     .then(res => res.json())
     .then(data => {
       if(data?.acknowledged){
-        setLoad(true)
+        setLoad(!false)
         toast.success('User verified successfully')
       }
     })   
@@ -80,7 +80,7 @@ const AllSellers = () => {
                     {
                         user?.isVerified ? <span className="text-green-500 font-bold">Verified</span> 
                         :
-                        <span onClick={()=>handleVerify(user?._id)} className="btn btn-sm rounded-md btn-outline">verify</span>
+                        <span onClick={()=>handleVerify(user?.email)} className="btn btn-sm rounded-md btn-outline">verify</span>
                     }
                 </td>
                 <td>

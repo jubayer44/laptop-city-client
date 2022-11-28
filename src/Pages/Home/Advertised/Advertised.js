@@ -5,11 +5,11 @@ import { AuthContext } from "../../../Context/AuthProvider";
 import BookingModal from "../../BookingModal/BookingModal";
 
 const Advertised = () => {
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [modalInfo, setModalInfo] = useState(null);
   const [modal, setModal] = useState(false);
-  const [userRole, setUserRole] = useState('');
-  
+  const [userRole, setUserRole] = useState("");
+
   const { data: advertiseProducts = [] } = useQuery({
     queryKey: ["advertiseProducts"],
     queryFn: async () => {
@@ -19,29 +19,29 @@ const Advertised = () => {
     },
   });
 
+  useEffect(() => {
+    if (user) {
+      fetch(`${process.env.REACT_APP_URL}/user?email=${user?.email}`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data?.role === "Buyer") {
+            setUserRole(data?.role);
+          }
+        });
+    }
+  }, [user]);
 
-  useEffect(()=> {
-    fetch(`http://localhost:5000/user?email=${user?.email}`)
-    .then(res => res.json())
-    .then(data => {
-      if(data?.role === "Buyer"){
-        setUserRole(data?.role);
-      }
-    })
-  }, [user?.email]);
-
-
-  const handleBooking =(product) => {
-    if(!userRole){
-      toast.error('Only Buyer can Booked a product')
-      return
+  const handleBooking = (product) => {
+    if (!userRole) {
+      toast.error("Only Buyer can Booked a product");
+      return;
     }
     setModal(true);
-      setModalInfo(product);
+    setModalInfo(product);
   };
 
   const handleReportToAdmin = (product) => {
-    if(!userRole){
+    if (!userRole) {
       toast.error("Only Buyer can report a product");
       return;
     }
@@ -49,29 +49,26 @@ const Advertised = () => {
       name: user?.displayName,
       email: user?.email,
       reportedId: product._id,
-      productName: product.productName
+      productName: product.productName,
     };
 
     fetch(`${process.env.REACT_APP_URL}/report`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'content-type': 'application/json'
+        "content-type": "application/json",
       },
-      body: JSON.stringify(reportedUser)
+      body: JSON.stringify(reportedUser),
     })
-    .then(res => res.json())
-    .then(data => {
-      if(data.acknowledged){
-          toast.success('Report Successfully Sent')
-      }
-      else{
-        toast.error(data.message);
-      }
-    })
-    .catch(err => console.error(err.message));
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          toast.success("Report Successfully Sent");
+        } else {
+          toast.error(data.message);
+        }
+      })
+      .catch((err) => console.error(err.message));
   };
-
-  
 
   return (
     <>
@@ -130,8 +127,11 @@ const Advertised = () => {
                       Buy Now
                     </label>
                     <button
-                onClick={()=> handleReportToAdmin(product)}
-                className="btn btn-primary w-full my-2 bg-blue-500 text-white font-bold rounded-md border-none">Report</button>
+                      onClick={() => handleReportToAdmin(product)}
+                      className="btn btn-primary w-full my-2 bg-blue-500 text-white font-bold rounded-md border-none"
+                    >
+                      Report
+                    </button>
                   </div>
                 </div>
               ))}
@@ -139,9 +139,7 @@ const Advertised = () => {
           </div>
         </div>
       )}
-      {
-        modal && <BookingModal product={modalInfo} setModal={setModal}/>
-      }
+      {modal && <BookingModal product={modalInfo} setModal={setModal} />}
     </>
   );
 };

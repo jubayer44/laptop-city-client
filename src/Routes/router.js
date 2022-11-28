@@ -31,7 +31,8 @@ const router = createBrowserRouter([
             },
             {
                 path: '/category/:id',
-                element: <PrivateRoutes><CategoryDetails/></PrivateRoutes>
+                element: <PrivateRoutes><CategoryDetails/></PrivateRoutes>,
+                loader: ({params})=> fetch(`${process.env.REACT_APP_URL}/category/${params.id}`)
             },
             {
                 path: '/login',

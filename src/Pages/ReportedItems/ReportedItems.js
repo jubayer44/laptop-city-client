@@ -19,7 +19,7 @@ const {data: reportedItems= []} = useQuery({
 const handleDeleteReportedItem = item => {
     const confirm = window.confirm('Are you sure you want to delete');
     if(confirm){
-        fetch(`http://localhost:5000/report/${item?._id}`,{
+        fetch(`${process.env.REACT_APP_URL}/report/${item?._id}`,{
         method: "DELETE",
         headers: {
             "content-type": "application/json", 
