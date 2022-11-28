@@ -66,7 +66,7 @@ const Product = ({ product, handleReportToAdmin, handleBooking }) => {
             </strong>
           </p>
           <p className="mb-4 text-gray-700 flex items-center ">
-            Seller: {product.seller}
+            Seller:<strong className="ml-2"> {product.seller}</strong>
             {userRole && (
               <svg
                 xmlns="http://www.w3.org/2000/svg"

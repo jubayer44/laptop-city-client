@@ -52,7 +52,7 @@ const CategoryCard = ({ product, handleReportToAdmin, handleBooking }) => {
             </strong>
           </p>
           <p className="mb-4 text-gray-700 flex items-center ">
-            Seller: {product.seller}
+            Seller: <strong className='ml-2'>{product.seller}</strong>
            
           </p>
           <button
