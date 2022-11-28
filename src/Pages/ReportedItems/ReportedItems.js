@@ -1,18 +1,34 @@
-import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+// import { useQuery } from '@tanstack/react-query';
+import React, { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 
 const ReportedItems = () => {
+  const [reportedItems, setReportedItems] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-const {data: reportedItems= []} = useQuery({
-    queryKey: ['reportedItems'],
-    queryFn: async()=> {
-        const res = await fetch(`${process.env.REACT_APP_URL}/report`, {
-          headers: {"authorization": `Bearer ${localStorage.getItem('access_token')}`}
-        });
-        const data = await res.json();
-        return data;
-    }
-})
+// const {data: reportedItems= [], refetch} = useQuery({
+//     queryKey: ['reportedItems'],
+//     queryFn: async()=> {
+//         const res = await fetch(`${process.env.REACT_APP_URL}/report`, {
+//           headers: {"authorization": `Bearer ${localStorage.getItem('access_token')}`}
+//         });
+//         const data = await res.json();
+//         return data;
+//     }
+// })
+
+
+
+useEffect(()=> {
+  fetch(`${process.env.REACT_APP_URL}/report`, {
+    headers: {"authorization": `Bearer ${localStorage.getItem('access_token')}`}
+  })
+  .then(res => res.json())
+  .then(data => {
+    console.log(data)
+    setReportedItems(data)
+  })
+}, [loading])
 
 
 
@@ -30,7 +46,10 @@ const handleDeleteReportedItem = item => {
     )
     .then(res => res.json())
     .then(data => {
-        console.log(data);
+      console.log(data);
+        toast.success('Deleted Successfully')
+        setLoading(!false)
+        // refetch()
     })
     }
 

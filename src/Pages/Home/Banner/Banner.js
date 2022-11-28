@@ -5,7 +5,6 @@ const Banner = () => {
   return (
     <div className="relative h-[80vh] ">
       <img
-      className="w-full"
         src={bannerPic}
         className="absolute inset-0 object-cover w-full h-full rounded-md"
         alt=""
