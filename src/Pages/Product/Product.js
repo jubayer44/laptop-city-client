@@ -15,7 +15,6 @@ const Product = ({ product, handleReportToAdmin, handleBooking }) => {
     }
   }, [product?.sellerEmail]);
 
-  console.log(product);
 
   return (
     <div>

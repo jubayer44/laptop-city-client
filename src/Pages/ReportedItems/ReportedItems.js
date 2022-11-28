@@ -48,7 +48,7 @@ const handleDeleteReportedItem = item => {
     .then(data => {
       console.log(data);
         toast.success('Deleted Successfully')
-        setLoading(!false)
+        setLoading(!loading)
         // refetch()
     })
     }
