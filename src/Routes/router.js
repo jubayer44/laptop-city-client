@@ -8,6 +8,7 @@ import Blog from "../Pages/Blog/Blog";
 import CategoryDetails from "../Pages/CategoryDetails/CategoryDetails";
 import Dashboard from "../Pages/Dashboard/Dashboard";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
+import Advertised from "../Pages/Home/Advertised/Advertised";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login/Login";
 import MyOrders from "../Pages/MyOrders/MyOrders";
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
             {
                 path: '/',
                 element: <Home/>
+            },
+            {
+                path: '/',
+                element: <Advertised/>
             },
             {
                 path: '/category/:id',

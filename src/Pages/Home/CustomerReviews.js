@@ -21,9 +21,7 @@ const CustomerReviews = () => {
                 <path d="M280,416h38.4L496,246.857V16H280ZM312,48H464V233.143L312,377.905Z"></path>
               </svg>
               <p className="px-6 py-1 text-lg italic">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                Voluptatibus quibusdam, eligendi exercitationem molestias
-                possimus facere.
+ Thank you very much and thank you for your valuable feedback. The bitter experience you had with the delivery man is truly unfortunate and we apologize. I hope that the  will give importance to these issues and work to make the service chief faster. 
               </p>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -36,7 +34,7 @@ const CustomerReviews = () => {
               </svg>
             </div>
             <span className="w-12 h-1 my-2 rounded-lg bg-violet-400"></span>
-            <p>Leroy Jenkins</p>
+            <p>Ahmed Jabir</p>
           </div>
           <div className="flex flex-col items-center max-w-lg mx-12 lg:mx-0">
             <div className="relative text-center">
@@ -95,10 +93,10 @@ const CustomerReviews = () => {
                 ></path>
               </svg>
               <p className="px-6 py-1 text-lg italic">
-                Accusantium illum cupiditate harum asperiores iusto quos quasi
-                quis quae! Fugit doloribus, voluptatum quidem magnam velit
-                excepturi nobis, reprehenderit ducimus incidunt quisquam quae
-                veritatis, quos iure harum.
+              I was a little nervous about the order that I made from Laptop. 
+
+but after getting the product I became fully satisfied.. 
+furthermore, the seller was outstanding ...
               </p>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -116,7 +114,7 @@ const CustomerReviews = () => {
               </svg>
             </div>
             <span className="w-12 h-1 my-2 rounded-lg bg-violet-400"></span>
-            <p>Leroy Jenkins</p>
+            <p>Jamil Hassan</p>
           </div>
           <div className="flex flex-col items-center max-w-lg mx-12 lg:mx-0">
             <div className="relative text-center">
@@ -135,10 +133,7 @@ const CustomerReviews = () => {
                 ></path>
               </svg>
               <p className="px-6 py-1 text-lg italic">
-                Accusantium illum cupiditate harum asperiores iusto quos quasi
-                quis quae! Fugit doloribus, voluptatum quidem magnam velit
-                excepturi nobis, reprehenderit ducimus incidunt quisquam quae
-                veritatis, quos iure harum.
+              Received my laptop today. This is my first purchase from laptop city. Everything is fine as I wanted. Seller is very sincere and helpful. . Laptop city also called repeatedly asking if the product is ok. I like Laptop City Service. In one word, 100% Satisfied. Highly recommend this store.
               </p>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -156,7 +151,7 @@ const CustomerReviews = () => {
               </svg>
             </div>
             <span className="w-12 h-1 my-2 rounded-lg bg-violet-400"></span>
-            <p>Leroy Jenkins</p>
+            <p>Yamin Seikh</p>
           </div>
         </div>
       </section>

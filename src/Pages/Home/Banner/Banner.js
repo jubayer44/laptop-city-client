@@ -1,10 +1,12 @@
 import React from "react";
+import bannerPic from '../../../Images/banner-pic.jpg';
 
 const Banner = () => {
   return (
     <div className="relative h-[80vh] ">
       <img
-        src="https://images.pexels.com/photos/3747463/pexels-photo-3747463.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=750&amp;w=1260"
+      className="w-full"
+        src={bannerPic}
         className="absolute inset-0 object-cover w-full h-full rounded-md"
         alt=""
       />
@@ -12,15 +14,15 @@ const Banner = () => {
         <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
           <div className="flex flex-col items-center justify-center xl:flex-row">
             <div className="w-full mx-auto max-w-xl mb-12 xl:mb-0 xl:pr-16 xl:w-7/12 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-              <h2 className="max-w-lg mb-6 font-sans text-3xl font-bold tracking-tight text-white sm:text-4xl sm:leading-none">
-                Buy and Sell Your Laptop <br className="hidden md:block" />
+              <h2 className="max-w-lg mb-6 text-center font-sans text-3xl font-bold tracking-tight text-white sm:text-4xl sm:leading-none lg:text-6xl leading-3">
+                Buy and Sell Your Laptop With Us<br className="hidden md:block" />
               </h2>
-              <p className="max-w-xl mb-4 text-base text-gray-400 md:text-lg">
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                accusantium doloremque laudan, totam rem aperiam, eaque ipsa
-                quae.
+              <p className="max-w-xl mb-4 text-base text-gray-200 md:text-lg">
+              If you’re selling digital products online, you need more than a pretty way to deliver your content. You need an easy way to boost conversions, maximize customer value, and run your business without worrying about technology. 
               </p>
-              <button className="btn btn-primary border-none my-2 bg-blue-500 text-white font-bold rounded-md">Get Start</button>
+             <div className="flex justify-center">
+             <button className="btn btn-primary border-none my-2 bg-blue-500 text-white font-bold rounded-md text-center">Get Start</button>
+             </div>
             </div>
           </div>
         </div>
