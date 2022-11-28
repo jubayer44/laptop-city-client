@@ -26,9 +26,9 @@ const Categories = () => {
         Explore By Category
       </h2>
       <div className=" py-8 mx-auto  lg:py-8">
-        <div className="grid gap-5 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:mx-auto ">
+        <div className="grid gap-5 grid-cols-1 md:grid-cols-3 lg:grid-cols-4 sm:mx-auto ">
           {categories?.map((category) => (
-            <div key={category._id} className="overflow-hidden transition-shadow duration-300 bg-white rounded max-w-xs">
+            <div key={category._id} className="overflow-hidden transition-shadow duration-300 bg-white rounded w-full">
               <Link to={`/category/${category._id}`} aria-label="Article">
                 <img
                   src={category?.img}
