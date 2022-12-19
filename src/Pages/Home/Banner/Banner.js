@@ -16,7 +16,7 @@ const Banner = () => {
               <h2 className="max-w-lg mb-6 text-center font-sans text-3xl font-bold  text-white lg:text-6xl">
                 Buy and Sell Your Laptop With Us<br className="hidden md:block" />
               </h2>
-              <p className="max-w-xl mb-4 text-base text-gray-200 md:text-lg">
+              <p className="max-w-xl mb-4 text-center text-gray-200 md:text-lg">
               If you’re selling digital products online, you need more than a pretty way to deliver your content. You need an easy way to boost conversions, maximize customer value, and run your business without worrying about technology. 
               </p>
              <div className="flex justify-center">

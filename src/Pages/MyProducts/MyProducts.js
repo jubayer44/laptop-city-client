@@ -7,7 +7,7 @@ import { AuthContext } from '../../Context/AuthProvider';
 const MyProducts = () => {
   const {user} = useContext(AuthContext);
 
-  const {data: myProducts = [], isLoading}= useQuery({
+  const {data: myProducts = [], refetch, isLoading}= useQuery({
     queryKey: ['myProducts'],
     queryFn: async()=> {
       const res = await fetch(`${process.env.REACT_APP_URL}/myProducts?email=${user?.email}`, {
@@ -56,6 +56,7 @@ const MyProducts = () => {
       .then(res => res.json())
       .then(data => {
         if(data.acknowledged){
+          refetch()
           toast.success('Product successfully deleted')
         }
       })
