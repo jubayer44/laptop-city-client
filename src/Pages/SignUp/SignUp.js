@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
@@ -13,10 +13,12 @@ const SignUp = () => {
   const { signUp, updateUser, googleLogIn } = useContext(AuthContext);
   const { register, handleSubmit } = useForm();
   const [token] = useToken(usr);
-  if (token) {
-    navigate("/");
-    setLoading(false)
-  }
+  useEffect(()=> {
+    if (token) {
+      navigate("/");
+      setLoading(false)
+    }
+  }, [token, navigate]);
 
   const handleRegister = (data) => {
     setLoading(true);

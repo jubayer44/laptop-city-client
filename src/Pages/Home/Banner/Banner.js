@@ -12,8 +12,8 @@ const Banner = () => {
       <div className="relative bg-gray-900 bg-opacity-75 h-[80vh]">
         <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
           <div className="flex flex-col items-center justify-center xl:flex-row">
-            <div className="w-full mx-auto max-w-xl mb-12 xl:mb-0 xl:pr-16 xl:w-7/12 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-              <h2 className="max-w-lg mb-6 text-center font-sans text-3xl font-bold tracking-tight text-white sm:text-4xl sm:leading-none lg:text-6xl leading-3">
+            <div className="p-3 w-full mx-auto max-w-xl mb-12 xl:mb-0 xl:pr-16 xl:w-7/12 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+              <h2 className="max-w-lg mb-6 text-center font-sans text-3xl font-bold  text-white lg:text-6xl">
                 Buy and Sell Your Laptop With Us<br className="hidden md:block" />
               </h2>
               <p className="max-w-xl mb-4 text-base text-gray-200 md:text-lg">

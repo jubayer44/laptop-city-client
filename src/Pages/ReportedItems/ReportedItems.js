@@ -61,7 +61,7 @@ const handleDeleteReportedItem = item => {
 
     return (
         <div className="overflow-x-auto w-full">
-        <h2 className="text-2xl font-semibold text-center my-5">All Buyers Information</h2>
+        <h2 className="text-2xl font-semibold text-center my-5">All Reported Products</h2>
       <table className="table w-full">
         <thead>
           <tr>
