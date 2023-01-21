@@ -8,8 +8,9 @@ import addUser from "../addUser/addUser";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const [usr, setUsr] = useState("");
-  const { logIn, googleLogIn } = useContext(AuthContext);
+  const { logIn, googleLogIn, forgatPassword } = useContext(AuthContext);
   const { register, handleSubmit } = useForm();
   const location = useLocation();
   const navigate = useNavigate();
@@ -42,6 +43,17 @@ const Login = () => {
       });
   };
 
+  const resetPassword = (event) => {
+    event.preventDefault();
+    const email = event.target.email.value;
+    toast.success("Reset password link sent to your email")
+    setIsVisible(false);
+    forgatPassword(email)
+    .then(result => {
+    })
+    .catch(err => console.log(err))
+  };
+
   const handleGoogleLogin = () => {
     googleLogIn()
       .then((res) => {
@@ -55,7 +67,7 @@ const Login = () => {
   };
 
   return (
-    <div className="w-full max-w-md p-8 space-y-3 rounded-xl my-10 mx-auto">
+    <div className="w-full max-w-md p-8 space-y-3 rounded-xl my-10 mx-auto relative">
       <h1 className="text-2xl font-bold text-center">Login</h1>
       <form
         onSubmit={handleSubmit(handleLogin)}
@@ -86,12 +98,15 @@ const Login = () => {
             className="input input-bordered w-full rounded-md"
           />
           <div className="flex justify-end text-xs text-gray-700">
-            <Link  to="">
+            <p
+            className="cursor-pointer"
+              onClick={()=>setIsVisible(true)}            
+            >
               Forgot Password?
-            </Link>
+            </p>
           </div>
         </div>
-        <button className="block w-full btn btn-primary text-center rounded-sm">
+        <button className="block w-full btn btn-primary text-center rounded-sm font-bold">
           {loading ? (
             <div
               style={{ borderTopColor: "transparent" }}
@@ -101,6 +116,23 @@ const Login = () => {
             "Sign In"
           )}
         </button>
+      </form>
+
+      <form
+        onSubmit={resetPassword}
+      className={isVisible ? "absolute bg-white py-10 px-24 rounded shadow-md top-[15%]" : "hidden"}
+      >
+        <p
+        onClick={()=> setIsVisible(false)}
+        className="absolute right-0 top-0 p-1 rounded font-bold bg-red-400 cursor-pointer">close</p>
+        <h2 className="text-2xl font-bold text-center my-5">Enter Your Email</h2>
+        <input type="text" name="email" placeholder="email" id="" className="input input-bordered w-full rounded-md" />
+        <div className="flex justify-center">
+        <button
+        type="submit"
+        className="bg-[#40abb0] p-2 rounded mt-3 font-bold text-white"
+        >Submit</button>
+        </div>
       </form>
 
       <div className="flex items-center pt-4 space-x-1">

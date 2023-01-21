@@ -21,14 +21,14 @@ const Categories = () => {
     }
 
   return (
-    <div>
+    <div id="category">
       <h2 className="text-2xl mt-8 font-bold text-center">
         Explore By Category
       </h2>
       <div className=" py-8 mx-auto  lg:py-8">
         <div className="grid gap-5 grid-cols-1 md:grid-cols-3 lg:grid-cols-4 sm:mx-auto ">
           {categories?.map((category) => (
-            <div key={category._id} className="overflow-hidden bg-white rounded w-full transform transition duration-500 hover:scale-110">
+            <div key={category._id} className="overflow-hidden bg-white rounded w-full transform transition duration-500 hover:scale-110 border-2">
               <Link to={`/category/${category._id}`} aria-label="Article">
                 <img
                   src={category?.img}

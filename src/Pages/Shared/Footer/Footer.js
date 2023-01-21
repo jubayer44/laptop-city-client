@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import img from '../../../Images/logo.png';
+import img from '../../../Images/laptop-city-logo.png';
 
 const Footer = () => {
     return (
@@ -13,10 +13,8 @@ const Footer = () => {
               title="Company"
               className="inline-flex items-center"
             >
-              <img src={img} alt="" className='h-10 w-10'/>
-              <span className="ml-2 text-xl font-bold tracking-wide text-gray-800 uppercase">
-                Laptop City
-              </span>
+              <img src={img} alt="" className="h-10" />
+              
             </Link >
             <div className="mt-6 lg:max-w-sm">
               <p className="text-sm text-gray-800">

@@ -20,7 +20,7 @@ const Banner = () => {
               If you’re selling digital products online, you need more than a pretty way to deliver your content. You need an easy way to boost conversions, maximize customer value, and run your business without worrying about technology. 
               </p>
              <div className="flex justify-center">
-             <button className="btn btn-primary border-none my-2 bg-blue-500 text-white font-bold rounded-md text-center">Get Start</button>
+             <a href="#category" className="btn btn-primary border-none my-2 bg-blue-500 text-white font-bold rounded-md text-center">Get Start</a>
              </div>
             </div>
           </div>

@@ -1,7 +1,10 @@
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../../Context/AuthProvider";
-import img from "../../../Images/logo.png";
+import img from "../../../Images/laptop-city-logo.png";
+import { FaHome, FaBook, FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
+import { AiFillDashboard } from "react-icons/ai";
+
 
 const Navbar = () => {
   const [navbar, setNavbar] = useState(false);
@@ -21,8 +24,7 @@ const Navbar = () => {
         <div>
           <div className="flex items-center justify-between py-3 md:py-5 md:block">
             <Link to="/" className="flex gap-2 items-center">
-              <img src={img} alt="" className="h-10 w-10" />
-              <h2 className="text-2xl font-bold font-serif">Laptop City</h2>
+              <img src={img} alt="" className="h-10" />
             </Link>
             <div className="md:hidden">
               <button
@@ -69,27 +71,42 @@ const Navbar = () => {
             }`}
           >
             <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
-              <li className="text-gray-600 hover:text-blue-600">
-                <Link to="/">Home</Link>
+            <li className="text-gray-600 font-semibold hover:text-blue-600">
+              
+                <NavLink to="/home" className={({ isActive }) =>
+              isActive ? "text-blue-600 font-semibold flex items-center gap-1" : "text-gray-600 font-semibold hover:text-blue-600 flex items-center gap-1"
+            }><FaHome/> Home</NavLink>
               </li>
-              <li className="text-gray-600 hover:text-blue-600">
-                <Link to="/blog">Blog</Link>
+              <li className="text-gray-600 font-semibold hover:text-blue-600 flex items-center gap-1">
+                
+                <NavLink to="/blog" className={({ isActive }) =>
+              isActive ? "text-blue-600 font-semibold flex items-center gap-1" : "text-gray-600 font-semibold hover:text-blue-600 flex items-center gap-1"
+            }><FaBook className="h-[14px]"/> Blog</NavLink>
               </li>
 
               {user ? (
                 <>
-                  <li className="text-gray-600 hover:text-blue-600">
-                    <Link to="/dashboard">Dashboard</Link>
+                  <li className="text-gray-600 font-semibold hover:text-blue-600 flex items-center gap-1">
+                    
+                    <NavLink to="/dashboard" className={({ isActive }) =>
+              isActive ? "text-blue-600 font-semibold flex items-center gap-1" : "text-gray-600 font-semibold hover:text-blue-600 flex items-center gap-1"
+            }><AiFillDashboard/> Dashboard</NavLink>
                   </li>
-                  <li className="text-gray-600 hover:text-blue-600">
-                    <Link onClick={handleLogout} to="/login">
-                      Logout
-                    </Link>
+                  <li className="text-gray-600 font-semibold hover:text-blue-600 flex items-center gap-1">
+                    
+                    <NavLink onClick={handleLogout} to="/login" className={({ isActive }) =>
+              isActive ? "text-blue-600 font-semibold flex items-center gap-1" : "text-gray-600 font-semibold hover:text-blue-600 flex items-center gap-1"
+            }>
+                    <FaSignOutAlt/>  Logout
+                    </NavLink>
                   </li>
                 </>
               ) : (
-                <li className="text-gray-600 hover:text-blue-600">
-                  <Link to="/login">Login</Link>
+                <li className="text-gray-600 font-semibold hover:text-blue-600 flex items-center gap-1">
+                  
+                  <NavLink to="/login" className={({ isActive }) =>
+              isActive ? "text-blue-600 font-semibold flex items-center gap-1" : "text-gray-600 font-semibold hover:text-blue-600 flex items-center gap-1"
+            }><FaSignInAlt/> Login</NavLink>
                 </li>
               )}
             </ul>
